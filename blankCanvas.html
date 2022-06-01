@@ -17,12 +17,15 @@
 
         var playerXpos = 0;
         var playerYpos = 0;
-        
-
+        var playerXspeed = 0;
+        var playerYspeed = 0;
+        var PLAYER_SIZE = 20;
 
 
         function mainloop() {
-            colorRect(0, 0, canvas.width, canvas.height, 'black'); // bg
+            colorRect(0, 0, canvas.width, canvas.height, 'black'); // big
+            colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'red');
+            
 
         }
 
