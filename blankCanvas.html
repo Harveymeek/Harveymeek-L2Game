@@ -1,7 +1,7 @@
 <!doctype html>
 
 <body>
-    <canvas id="gameCanvas" width="600" height="600"></canvas>
+    <canvas id="gameCanvas" width="1900" height="940"></canvas>
     <script>
         var canvas, canvasContext;
 
@@ -9,28 +9,87 @@
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
 
+
+            document.addEventListener('keydown', keyPressed);
+            document.addEventListener('keyup', keyReleased);
+
+
             setInterval(mainloop, 1000 / 50);
         }
 
 
-
-
         var playerXpos = 0;
         var playerYpos = 0;
-        var playerXspeed = 0;
-        var playerYspeed = 0;
+        var playerXspeed = 5;
+        var playerYspeed = 5;
         var PLAYER_SIZE = 20;
+
+        const D_KEY = 68;
+        const A_KEY = 65;
+        const SPACE_KEY = 32;
+
+        var dKeyPressed = false;
+        var aKeyPressed = false;
+        var spaceKeyPressed = false;
+
+        var gameRun = true;
+
 
 
         function mainloop() {
             colorRect(0, 0, canvas.width, canvas.height, 'black'); // big
-            
+            colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'red');
 
+            PlayerMove()
+
+
+            function colorRect(x, y, w, h, c) {
+                canvasContext.fillStyle = c;
+                canvasContext.fillRect(x, y, w, h);
+            }
         }
 
-        function colorRect(x, y, w, h, c) {
-            canvasContext.fillStyle = c;
-            canvasContext.fillRect(x, y, w, h);
+
+        function keyPressed(evt) {
+            if (evt.keyCode == D_KEY) {
+                dKeyPressed = true;
+            }
+
+            if (evt.keyCode == A_KEY) {
+                aKeyPressed = true;
+            }
+
+            if (evt.keyCode == SPACE_KEY) {
+                spaceKeyPressed = true;
+            }
+        }
+
+        function keyReleased(evt) {
+            if (evt.keyCode == D_KEY) {
+                dKeyPressed = false;
+            }
+            if (evt.keyCode == A_KEY) {
+                aKeyPressed = false;
+            }
+            if (evt.keyCode == SPACE_KEY) {
+                spaceKeyPressed = false;
+            }
+        }
+
+        function PlayerMove() {
+
+            if (dKeyPressed) {
+                playerXpos += playerXspeed
+            }
+            if (aKeyPressed) {
+                playerXpos -= playerXspeed
+            }
+            if (spaceKeyPressed) {
+                playerYpos -= playerYspeed 
+            }
+
+
+
         }
     </script>
 </body>
