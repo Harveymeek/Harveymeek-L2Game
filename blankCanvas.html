@@ -79,15 +79,16 @@
 
         function PlayerMove() {
 
-            if (dKeyPressed && playerXpos) {
+            if (dKeyPressed && playerXpos < canvas.width * .985) {
                 playerXpos += playerXspeed
             }
-            if (aKeyPressed && playerXpos) {
+            if (aKeyPressed && playerXpos > canvas.width * .001) {
                 playerXpos -= playerXspeed
             }
-            if (spaceKeyPressed && playerYpos) {
+            if (spaceKeyPressed && playerYpos > canvas.height * .001) {
                 playerYpos -= playerYspeed 
             }
-    }
+
+        }
     </script>
 </body>
