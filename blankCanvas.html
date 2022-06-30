@@ -19,7 +19,7 @@
 
 
         var playerXpos = 50;
-        var playerYpos = 50;
+        var playerYpos = 920;
         var playerXspeed = 10;
         var playerYspeed = 5;
         var PLAYER_SIZE = 20;
@@ -37,7 +37,7 @@
 
 
         function mainloop() {
-            
+
             colorRect(0, 0, canvas.width, canvas.height, 'black'); // big
             colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'white');
 
@@ -85,8 +85,21 @@
             if (aKeyPressed && playerXpos > canvas.width * .001) {
                 playerXpos -= playerXspeed
             }
-            if (spaceKeyPressed && playerYpos > canvas.height * .001) {
-                playerYpos -= playerYspeed 
+            if (spaceKeyPressed) {
+                playerYspeed = -7;
+            }
+
+            playerYpos += playerYspeed;
+            playerYspeed += .2;
+
+            if (playerYpos <= 0) {
+                playerYpos = 0;
+                playerYspeed = 0.5;
+            }
+
+            if (playerYpos + PLAYER_SIZE >= canvas.height) {
+                playerYpos = canvas.height - PLAYER_SIZE;
+                
             }
 
         }
