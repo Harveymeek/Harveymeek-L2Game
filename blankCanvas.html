@@ -22,7 +22,7 @@
         var playerYpos = 920;
         var playerXspeed = 10;
         var playerYspeed = 5;
-        var PLAYER_SIZE = 20;
+        var PLAYER_SIZE = 34;
 
         const D_KEY = 68;
         const A_KEY = 65;
@@ -85,12 +85,12 @@
             if (aKeyPressed && playerXpos > canvas.width * .001) {
                 playerXpos -= playerXspeed
             }
-            if (spaceKeyPressed && playerYpos > 915) {
-                playerYspeed = -7;
+            if (spaceKeyPressed && playerYpos > 905) {
+                playerYspeed = -30;
             }
 
             playerYpos += playerYspeed;
-            playerYspeed += .2;
+            playerYspeed += 2;
 
             if (playerYpos <= 0) {
                 playerYpos = 0;
