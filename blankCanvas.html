@@ -58,7 +58,7 @@
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
         }
-        
+
 
 
         function keyPressed(evt) {
@@ -73,10 +73,11 @@
             if (evt.keyCode == SPACE_KEY) {
                 spaceKeyPressed = true;
             }
-            if (evt.keyCode == BACKSPACE) {}
-            backspaceKeyPressed = true;
+            if (evt.keyCode == BACKSPACE) {
+                backspaceKeyPressed = true;
+            }
         }
-        
+
 
         function keyReleased(evt) {
             if (evt.keyCode == D_KEY) {
@@ -87,6 +88,9 @@
             }
             if (evt.keyCode == SPACE_KEY) {
                 spaceKeyPressed = false;
+            }
+            if (evt.keyCode == BACKSPACE) {
+                backspaceKeyPressed = false;
             }
         }
 
