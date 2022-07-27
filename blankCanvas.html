@@ -2,6 +2,11 @@
 
 <body>
     <canvas id="gameCanvas" width="1900" height="940"></canvas>
+    
+    <div id="demo">
+        <p id="image"> </p>
+      </div>
+    
     <script>
         var canvas, canvasContext;
 
@@ -25,14 +30,19 @@
         var PLAYER_SIZE = 34;
 
 
-        var swordXpos = 100;
-        var swordYpos = 100;
-        var SWORD_SIZE = 30;
+        var swordXpos = 200;
+        var swordYpos = 200;
+        var SWORD_SIZE = 0;
+
+        var box1Xpos = 100;
+        var box1Ypos = 100;
+        var BOX1_SIZE = 30;
+
 
         const D_KEY = 68;
         const A_KEY = 65;
         const SPACE_KEY = 32;
-        const BACKSPACE_KEY = 9;
+        const BACKSPACE_KEY = 8;
 
         var dKeyPressed = false;
         var aKeyPressed = false;
@@ -41,13 +51,12 @@
 
         var gameRun = true;
 
-
-
         function mainloop() {
 
             colorRect(0, 0, canvas.width, canvas.height, 'black'); // big
             colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'white');
-
+            colorRect(swordXpos, swordYpos, SWORD_SIZE, SWORD_SIZE, 'grey');
+            colorRect(box1Xpos, box1Ypos, BOX1_SIZE, BOX1_SIZE, 'grey' );
             PlayerMove()
 
 
@@ -73,7 +82,7 @@
             if (evt.keyCode == SPACE_KEY) {
                 spaceKeyPressed = true;
             }
-            if (evt.keyCode == BACKSPACE) {
+            if (evt.keyCode == BACKSPACE_KEY) {
                 backspaceKeyPressed = true;
             }
         }
@@ -89,14 +98,22 @@
             if (evt.keyCode == SPACE_KEY) {
                 spaceKeyPressed = false;
             }
-            if (evt.keyCode == BACKSPACE) {
+            if (evt.keyCode == BACKSPACE_KEY) {
                 backspaceKeyPressed = false;
             }
         }
 
+
+
+
+        function SwordAppear() {
+        
+    }
+    
+
         function PlayerMove() {
 
-            if (dKeyPressed && playerXpos < canvas.width * .985) {
+            if (dKeyPressed && playerXpos < canvas.width * .979) {
                 playerXpos += playerXspeed
             }
             if (aKeyPressed && playerXpos > canvas.width * .001) {
@@ -120,5 +137,6 @@
             }
 
         }
+
     </script>
 </body>
