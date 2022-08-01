@@ -2,11 +2,11 @@
 
 <body>
     <canvas id="gameCanvas" width="1900" height="940"></canvas>
-    
+
     <div id="demo">
         <p id="image"> </p>
-      </div>
-    
+    </div>
+
     <script>
         var canvas, canvasContext;
 
@@ -36,7 +36,8 @@
 
         var enemyXpos = 100;
         var enemyYpos = 100;
-        var ENEMY_SIZE = 500;
+        var ENEMY_SIZE = 100;
+        var enemyXspeed = 5;
 
 
         const D_KEY = 68;
@@ -60,7 +61,7 @@
             PlayerMove()
 
 
-
+            EnemyMove()
         }
 
         function colorRect(x, y, w, h, c) {
@@ -104,9 +105,9 @@
         }
 
         function SwordAppear() {
-        
-    }
-    
+
+        }
+
 
         function PlayerMove() {
 
@@ -143,7 +144,12 @@
             } */
         }
 
+        function EnemyMove() {
+
+            enemyXpos += enemyXspeed
         
 
+            
+        }
     </script>
 </body>
