@@ -2,6 +2,11 @@
 
 <body>
     <canvas id="gameCanvas" width="1900" height="940"></canvas>
+
+    <div id="demo">
+        <p id="image"> </p>
+    </div>
+
     <script>
         var canvas, canvasContext;
 
@@ -24,31 +29,46 @@
         var playerYspeed = 5;
         var PLAYER_SIZE = 34;
 
+
+        var swordXpos = 200;
+        var swordYpos = 200;
+        var SWORD_SIZE = 50;
+
+        var enemyXpos = 100;
+        var enemyYpos = 500;
+        var ENEMY_SIZE = 100;
+        var enemyXspeed = 100;
+
+
         const D_KEY = 68;
         const A_KEY = 65;
         const SPACE_KEY = 32;
+        const BACKSPACE_KEY = 8;
 
         var dKeyPressed = false;
         var aKeyPressed = false;
         var spaceKeyPressed = false;
+        var backspaceKeyPressed = false;
 
         var gameRun = true;
-
-
 
         function mainloop() {
 
             colorRect(0, 0, canvas.width, canvas.height, 'black'); // big
             colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'white');
-
+            colorRect(swordXpos, swordYpos, SWORD_SIZE, SWORD_SIZE, 'grey');
+            colorRect(enemyXpos, enemyYpos, ENEMY_SIZE, ENEMY_SIZE, 'lightgreen');
             PlayerMove()
 
 
-            function colorRect(x, y, w, h, c) {
-                canvasContext.fillStyle = c;
-                canvasContext.fillRect(x, y, w, h);
-            }
+            EnemyMove()
         }
+
+        function colorRect(x, y, w, h, c) {
+            canvasContext.fillStyle = c;
+            canvasContext.fillRect(x, y, w, h);
+        }
+
 
 
         function keyPressed(evt) {
@@ -63,7 +83,11 @@
             if (evt.keyCode == SPACE_KEY) {
                 spaceKeyPressed = true;
             }
+            if (evt.keyCode == BACKSPACE_KEY) {
+                backspaceKeyPressed = true;
+            }
         }
+
 
         function keyReleased(evt) {
             if (evt.keyCode == D_KEY) {
@@ -75,17 +99,32 @@
             if (evt.keyCode == SPACE_KEY) {
                 spaceKeyPressed = false;
             }
+            if (evt.keyCode == BACKSPACE_KEY) {
+                backspaceKeyPressed = false;
+            }
         }
 
+        // function SwordAppear() {
+        //     if (backspaceKeyPressed){
+        //         swordXpos = PLAYER_SIZE + playerXpos;
+        //         swordYpos = PLAYER_SIZE + playerYpos;
+        //     } else {
+        //         swordXpos = 0;
+        //     }
+
+        // }
+
+
+        
         function PlayerMove() {
 
-            if (dKeyPressed && playerXpos < canvas.width * .985) {
+            if (dKeyPressed && playerXpos < canvas.width * .979) {
                 playerXpos += playerXspeed
             }
             if (aKeyPressed && playerXpos > canvas.width * .001) {
                 playerXpos -= playerXspeed
             }
-            if (spaceKeyPressed && playerYpos > 905) {
+            if (spaceKeyPressed && playerYpos > canvas.height * .95) {
                 playerYspeed = -30;
             }
 
@@ -99,9 +138,39 @@
 
             if (playerYpos + PLAYER_SIZE >= canvas.height) {
                 playerYpos = canvas.height - PLAYER_SIZE;
+
+            }
+            if (backspaceKeyPressed){
+                swordXpos = PLAYER_SIZE + playerXpos;
+                swordYpos = playerYpos;
+                SWORD_SIZE = 34;
+
+            }
+            else {
+                SWORD_SIZE = 0;
+            }
+
+            
+
+            /*if (playerYpos + PLAYER_SIZE > box1Ypos &&  playerYpos < box1Ypos
+            + BOX1_SIZE && playerXpos + PLAYER_SIZE > box1Xpos){
+                console.log('hit')
+                playerXspeed = 0;
+                playerYspeed = 0;
                 
+
+            } */
+        }
+
+        function EnemyMove() {
+
+            enemyXpos += enemyXspeed
+        
+            if (enemyXpos > canvas.width) {
+                enemyXpos = 0;
             }
 
         }
     </script>
 </body>
+
