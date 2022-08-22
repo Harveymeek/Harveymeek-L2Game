@@ -3,10 +3,6 @@
 <body>
     <canvas id="gameCanvas" width="1900" height="940"></canvas>
 
-    <div id="demo">
-        <p id="image"> </p>
-    </div>
-
     <script>
         var canvas, canvasContext;
 
@@ -14,7 +10,7 @@
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
 
-
+            document.body.style.background = 'black';
             document.addEventListener('keydown', keyPressed);
             document.addEventListener('keyup', keyReleased);
 
@@ -27,17 +23,17 @@
         var playerYpos = 920;
         var playerXspeed = 10;
         var playerYspeed = 5;
-        var PLAYER_SIZE = 34;
+        var PLAYER_SIZE = 45;
 
 
         var swordXpos = 200;
         var swordYpos = 200;
-        var SWORD_SIZE = 0;
+        var SWORD_SIZE = 50;
 
         var enemyXpos = 100;
-        var enemyYpos = 100;
-        var ENEMY_SIZE = 100;
-        var enemyXspeed = 5;
+        var enemyYpos = 890;
+        var ENEMY_SIZE = 50;
+        var enemyXspeed = 10;
 
 
         const D_KEY = 68;
@@ -50,26 +46,32 @@
         var spaceKeyPressed = false;
         var backspaceKeyPressed = false;
 
+        var background1 = new Image();
+        background1.src = "images/background1.png";
         var gameRun = true;
 
         function mainloop() {
 
-            colorRect(0, 0, canvas.width, canvas.height, 'black'); // big
+            drawImg(background1, 0, 0, canvas.width, canvas.height); // big
             colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'white');
             colorRect(swordXpos, swordYpos, SWORD_SIZE, SWORD_SIZE, 'grey');
-            colorRect(enemyXpos, enemyYpos, ENEMY_SIZE, ENEMY_SIZE, 'blue');
+            colorRect(enemyXpos, enemyYpos, ENEMY_SIZE, ENEMY_SIZE, 'lightgreen');
             PlayerMove()
 
 
             EnemyMove()
         }
 
+
+
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
         }
 
-
+        function drawImg(src, x, y, w, h) {
+            canvasContext.drawImage(src, x, y, w, h)
+        }
 
         function keyPressed(evt) {
             if (evt.keyCode == D_KEY) {
@@ -104,9 +106,16 @@
             }
         }
 
-        function SwordAppear() {
+        // function SwordAppear() {
+        //     if (backspaceKeyPressed){
+        //         swordXpos = PLAYER_SIZE + playerXpos;
+        //         swordYpos = PLAYER_SIZE + playerYpos;
+        //     } else {
+        //         swordXpos = 0;
+        //     }
 
-        }
+        // }
+
 
 
         function PlayerMove() {
@@ -117,7 +126,7 @@
             if (aKeyPressed && playerXpos > canvas.width * .001) {
                 playerXpos -= playerXspeed
             }
-            if (spaceKeyPressed && playerYpos > 905) {
+            if (spaceKeyPressed && playerYpos > canvas.height * .95) {
                 playerYspeed = -30;
             }
 
@@ -133,23 +142,33 @@
                 playerYpos = canvas.height - PLAYER_SIZE;
 
             }
+            if (backspaceKeyPressed) {
+                swordXpos = PLAYER_SIZE + playerXpos;
+                swordYpos = playerYpos;
+                SWORD_SIZE = 34;
 
-            /*if (playerYpos + PLAYER_SIZE > box1Ypos &&  playerYpos < box1Ypos
-            + BOX1_SIZE && playerXpos + PLAYER_SIZE > box1Xpos){
-                console.log('hit')
-                playerXspeed = 0;
-                playerYspeed = 0;
-                
+            } else {
+                SWORD_SIZE = 0;
+            }
 
-            } */
         }
+
 
         function EnemyMove() {
 
             enemyXpos += enemyXspeed
-        
 
-            
+            if (enemyXpos > canvas.width) {
+                enemyXpos = 0;
+            }
+            if (enemyXpos < playerXpos + PLAYER_SIZE &&
+                enemyXpos + ENEMY_SIZE > playerXpos &&
+                enemyYpos < playerYpos + PLAYER_SIZE &&
+                enemyYpos + ENEMY_SIZE > playerYpos) {
+
+                    alert('you died')
+            }
+
         }
     </script>
 </body>
