@@ -4,12 +4,13 @@
     <canvas id="gameCanvas" width="1900" height="940"></canvas>
 
     <script>
-        var canvas, canvasContext;
+        var canvas, canvasContext, imageAssets;
 
         window.onload = function () {
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
-
+            imageAssests = 
+            
             document.body.style.background = 'black';
             document.addEventListener('keydown', keyPressed);
             document.addEventListener('keyup', keyReleased);
@@ -23,7 +24,7 @@
         var playerYpos = 920;
         var playerXspeed = 10;
         var playerYspeed = 5;
-        var PLAYER_SIZE = 34;
+        var PLAYER_SIZE = 45;
 
 
         var swordXpos = 200;
@@ -62,6 +63,13 @@
             EnemyMove()
         }
 
+        function imgAssets(){
+            imgs = {}
+
+            imgs.player = new Image();
+            imgs.player.src = 'images/player.png'
+            return imgs;
+        }
 
 
         function colorRect(x, y, w, h, c) {
@@ -70,7 +78,7 @@
         }
 
         function drawImg(src, x, y, w, h) {
-            canvasContext.drawImage(src,x,y,w,h)
+            canvasContext.drawImage(src, x, y, w, h)
         }
 
         function keyPressed(evt) {
@@ -151,17 +159,8 @@
                 SWORD_SIZE = 0;
             }
 
-
-
-            /*if (playerYpos + PLAYER_SIZE > box1Ypos &&  playerYpos < box1Ypos
-            + BOX1_SIZE && playerXpos + PLAYER_SIZE > box1Xpos){
-                console.log('hit')
-                playerXspeed = 0;
-                playerYspeed = 0;
-                
-
-            } */
         }
+
 
         function EnemyMove() {
 
@@ -169,6 +168,13 @@
 
             if (enemyXpos > canvas.width) {
                 enemyXpos = 0;
+            }
+            if (enemyXpos < playerXpos + PLAYER_SIZE &&
+                enemyXpos + ENEMY_SIZE > playerXpos &&
+                enemyYpos < playerYpos + PLAYER_SIZE &&
+                enemyYpos + ENEMY_SIZE > playerYpos) {
+
+                    alert('you died')
             }
 
         }
