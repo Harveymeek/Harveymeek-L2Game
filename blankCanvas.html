@@ -9,7 +9,7 @@
         window.onload = function () {
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
-            imageAssests = 
+            imageAssests = LoadImgAssets();
             
             document.body.style.background = 'black';
             document.addEventListener('keydown', keyPressed);
@@ -63,14 +63,17 @@
             EnemyMove()
         }
 
-        function imgAssets(){
+        function LoadImgAssets(){
             imgs = {}
 
             imgs.player = new Image();
             imgs.player.src = 'images/player.png'
-            return imgs;
+            return imgs; 
         }
 
+        function drawSprite(){
+            
+        }
 
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;
