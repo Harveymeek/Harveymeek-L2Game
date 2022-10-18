@@ -49,6 +49,7 @@
         const A_KEY = 65;
         const SPACE_KEY = 32;
         const BACKSPACE_KEY = 8;
+        
 
         var dKeyPressed = false;
         var aKeyPressed = false;
@@ -69,6 +70,8 @@
 
 
             EnemyMove()
+        
+            playerAnimation();
         }
 
         function LoadImgAssets(){
@@ -85,7 +88,7 @@
             playerSpriteArray[i][0] = PLAYER_WIDTH * (i % 4);
             //console.log(playerSpriteArray[i][0]);
             
-            if(i != 0 && i%4 == 0){
+            if(i != 0 && i% 4 == 0){
                 playerSpriteSheetCols++;
             }
             playerSpriteArray[i][1] = PLAYER_HEIGHT * playerSpriteSheetCols;
@@ -93,7 +96,19 @@
         }
 
         function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
-            canvasContext.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
+            canvasContext.drawImage(img, 40, sY, sW, sH, dX, dY, dW, dH);
+        }
+
+        function playerAnimation(){
+            playerXsource = playerSpriteArray[playerSpriteNum][0];
+            playerYsource = playerSpriteArray[playerSpriteNum][1];
+        
+            playerSpriteNum++;
+
+            if(playerSpriteNum > 15) {
+               playerSpriteNum = 0;
+            }
+        
         }
 
         function colorRect(x, y, w, h, c) {
