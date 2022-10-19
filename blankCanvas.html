@@ -69,7 +69,7 @@
 
             drawImg(background1, 0, 0, canvas.width, canvas.height); // big
             colorRect(swordXpos, swordYpos, SWORD_SIZE, SWORD_SIZE, 'grey');
-            colorRect(enemyXpos, enemyYpos, ENEMY_SIZE, ENEMY_SIZE, 'lightgreen');
+            drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
             drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
             playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
             PlayerMove()
