@@ -4,12 +4,13 @@
     <canvas id="gameCanvas" width="1900" height="940"></canvas>
 
     <script>
-        var canvas, canvasContext;
+        var canvas, canvasContext, imageAssets;
 
         window.onload = function () {
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
-
+            imageAssets= LoadImgAssets();
+            
             document.body.style.background = 'black';
             document.addEventListener('keydown', keyPressed);
             document.addEventListener('keyup', keyReleased);
@@ -18,16 +19,25 @@
             setInterval(mainloop, 1000 / 50);
         }
 
-
+        var playerXsource = 0;
+        var playerYsource = 0;
+        const PLAYER_WIDTH = 400;
+        const PLAYER_HEIGHT = 407;
         var playerXpos = 50;
         var playerYpos = 920;
+
+
+
+        
         var playerXspeed = 10;
         var playerYspeed = 5;
         var PLAYER_SIZE = 45;
 
+        
 
         var swordXpos = 200;
         var swordYpos = 200;
+        
         var SWORD_SIZE = 50;
 
         var enemyXpos = 100;
@@ -40,6 +50,7 @@
         const A_KEY = 65;
         const SPACE_KEY = 32;
         const BACKSPACE_KEY = 8;
+        
 
         var dKeyPressed = false;
         var aKeyPressed = false;
@@ -48,22 +59,43 @@
 
         var background1 = new Image();
         background1.src = "images/background1.png";
-        var gameRun = true;
+        
+        var enemy = new Image();
+        enemy.src = "images/enemy.png";
+        
+        var gameRun = true; 
 
         function mainloop() {
 
             drawImg(background1, 0, 0, canvas.width, canvas.height); // big
-            colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'white');
             colorRect(swordXpos, swordYpos, SWORD_SIZE, SWORD_SIZE, 'grey');
             colorRect(enemyXpos, enemyYpos, ENEMY_SIZE, ENEMY_SIZE, 'lightgreen');
+            drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
+            playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
             PlayerMove()
 
 
             EnemyMove()
+        
+            
         }
 
+        function LoadImgAssets(){
+            imgs = {}
 
+            imgs.player = new Image();
+            imgs.player.src = "images/player.png";
+            
+            return imgs; 
+        }
 
+        
+
+        function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
+            canvasContext.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
+        }
+
+        
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
@@ -73,6 +105,11 @@
             canvasContext.drawImage(src, x, y, w, h)
         }
 
+        function drawRect(x, y, h, w, color) {
+            canvasContext.fillStyle = color;
+            canvasContext.fillRect(x, y, h, w);
+        }
+       
         function keyPressed(evt) {
             if (evt.keyCode == D_KEY) {
                 dKeyPressed = true;
