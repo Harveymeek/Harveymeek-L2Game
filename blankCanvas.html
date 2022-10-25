@@ -40,9 +40,10 @@
         
         var SWORD_SIZE = 50;
 
-        var enemyXpos = 100;
-        var enemyYpos = 890;
-        var ENEMY_SIZE = 50;
+        var enemyXpos = 1850;
+        var enemyYpos = 850;
+        var ENEMY_WIDTH = 100;
+        var ENEMY_HEIGHT = 100;
         var enemyXspeed = 10;
 
 
@@ -193,15 +194,15 @@
 
         function EnemyMove() {
 
-            enemyXpos += enemyXspeed
+            enemyXpos -= enemyXspeed
 
-            if (enemyXpos > canvas.width) {
-                enemyXpos = 0;
+            if (enemyXpos < canvas.width * 0.0000009) {
+                enemyXpos = 1850;
             }
             if (enemyXpos < playerXpos + PLAYER_SIZE &&
-                enemyXpos + ENEMY_SIZE > playerXpos &&
+                enemyXpos + ENEMY_WIDTH > playerXpos &&
                 enemyYpos < playerYpos + PLAYER_SIZE &&
-                enemyYpos + ENEMY_SIZE > playerYpos) {
+                enemyYpos + ENEMY_HEIGHT > playerYpos) {
 
                     alert('you died')
             }
