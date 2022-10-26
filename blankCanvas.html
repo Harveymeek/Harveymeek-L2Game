@@ -37,8 +37,8 @@
 
         var swordXpos = 200;
         var swordYpos = 200;
-        
-        var SWORD_SIZE = 50;
+        var SWORD_WIDTH = 50;
+        var SWORD_HEIGHT = 50;
 
         var enemyXpos = 1850;
         var enemyYpos = 850;
@@ -71,7 +71,7 @@
         function mainloop() {
 
             drawImg(background1, 0, 0, canvas.width, canvas.height); // big
-            colorRect(swordXpos, swordYpos, SWORD_SIZE, SWORD_SIZE, 'grey');
+            drawImg(swordXpos, swordYpos, SWORD_WIDTH, SWORD_HEIGHT, 'grey');
             drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
             drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
             playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
