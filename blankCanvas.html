@@ -3,18 +3,15 @@
 <body>
     <canvas id="gameCanvas" width="1900" height="940"></canvas>
 
-    <div id="demo">
-        <p id="image"> </p>
-    </div>
-
     <script>
-        var canvas, canvasContext;
+        var canvas, canvasContext, imageAssets;
 
         window.onload = function () {
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
-
-
+            imageAssets= LoadImgAssets();
+            
+            document.body.style.background = 'black';
             document.addEventListener('keydown', keyPressed);
             document.addEventListener('keyup', keyReleased);
 
@@ -22,55 +19,98 @@
             setInterval(mainloop, 1000 / 50);
         }
 
-
+        var playerXsource = 0;
+        var playerYsource = 0;
+        const PLAYER_WIDTH = 400;
+        const PLAYER_HEIGHT = 407;
         var playerXpos = 50;
         var playerYpos = 920;
+
+
+
+        
         var playerXspeed = 10;
         var playerYspeed = 5;
-        var PLAYER_SIZE = 34;
+        var PLAYER_SIZE = 45;
 
+        
 
         var swordXpos = 200;
         var swordYpos = 200;
+        
         var SWORD_SIZE = 50;
 
-        var enemyXpos = 100;
-        var enemyYpos = 500;
-        var ENEMY_SIZE = 100;
-        var enemyXspeed = 100;
+        var enemyXpos = 1850;
+        var enemyYpos = 850;
+        var ENEMY_WIDTH = 100;
+        var ENEMY_HEIGHT = 100;
+        var enemyXspeed = 10;
 
 
         const D_KEY = 68;
         const A_KEY = 65;
         const SPACE_KEY = 32;
         const BACKSPACE_KEY = 8;
+        
 
         var dKeyPressed = false;
         var aKeyPressed = false;
         var spaceKeyPressed = false;
         var backspaceKeyPressed = false;
 
-        var gameRun = true;
+        var background1 = new Image();
+        background1.src = "images/background1.png";
+        
+        var enemy = new Image();
+        enemy.src = "images/enemy.png";
+        
+        var gameRun = true; 
 
         function mainloop() {
 
-            colorRect(0, 0, canvas.width, canvas.height, 'black'); // big
-            colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'white');
+            drawImg(background1, 0, 0, canvas.width, canvas.height); // big
             colorRect(swordXpos, swordYpos, SWORD_SIZE, SWORD_SIZE, 'grey');
-            colorRect(enemyXpos, enemyYpos, ENEMY_SIZE, ENEMY_SIZE, 'lightgreen');
+            drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
+            drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
+            playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
             PlayerMove()
 
 
             EnemyMove()
+        
+            
         }
 
+        function LoadImgAssets(){
+            imgs = {}
+
+            imgs.player = new Image();
+            imgs.player.src = "images/player.png";
+            
+            return imgs; 
+        }
+
+        
+
+        function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
+            canvasContext.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
+        }
+
+        
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
         }
 
+        function drawImg(src, x, y, w, h) {
+            canvasContext.drawImage(src, x, y, w, h)
+        }
 
-
+        function drawRect(x, y, h, w, color) {
+            canvasContext.fillStyle = color;
+            canvasContext.fillRect(x, y, h, w);
+        }
+       
         function keyPressed(evt) {
             if (evt.keyCode == D_KEY) {
                 dKeyPressed = true;
@@ -115,7 +155,7 @@
         // }
 
 
-        
+
         function PlayerMove() {
 
             if (dKeyPressed && playerXpos < canvas.width * .979) {
@@ -140,37 +180,33 @@
                 playerYpos = canvas.height - PLAYER_SIZE;
 
             }
-            if (backspaceKeyPressed){
+            if (backspaceKeyPressed) {
                 swordXpos = PLAYER_SIZE + playerXpos;
                 swordYpos = playerYpos;
                 SWORD_SIZE = 34;
 
-            }
-            else {
+            } else {
                 SWORD_SIZE = 0;
             }
 
-            
-
-            /*if (playerYpos + PLAYER_SIZE > box1Ypos &&  playerYpos < box1Ypos
-            + BOX1_SIZE && playerXpos + PLAYER_SIZE > box1Xpos){
-                console.log('hit')
-                playerXspeed = 0;
-                playerYspeed = 0;
-                
-
-            } */
         }
+
 
         function EnemyMove() {
 
-            enemyXpos += enemyXspeed
-        
-            if (enemyXpos > canvas.width) {
-                enemyXpos = 0;
+            enemyXpos -= enemyXspeed
+
+            if (enemyXpos < canvas.width * 0.0000009) {
+                enemyXpos = 1850;
+            }
+            if (enemyXpos < playerXpos + PLAYER_SIZE &&
+                enemyXpos + ENEMY_WIDTH > playerXpos &&
+                enemyYpos < playerYpos + PLAYER_SIZE &&
+                enemyYpos + ENEMY_HEIGHT > playerYpos) {
+
+                    alert('you died')
             }
 
         }
     </script>
 </body>
-
