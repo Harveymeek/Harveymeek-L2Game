@@ -37,8 +37,8 @@
 
         var swordXpos = 200;
         var swordYpos = 200;
-        var SWORD_WIDTH = 50;
-        var SWORD_HEIGHT = 50;
+        var SWORD_WIDTH = 100;
+        var SWORD_HEIGHT = 100;
 
         var enemyXpos = 1850;
         var enemyYpos = 850;
@@ -71,7 +71,7 @@
         function mainloop() {
 
             drawImg(background1, 0, 0, canvas.width, canvas.height); // big
-            drawImg(swordXpos, swordYpos, SWORD_WIDTH, SWORD_HEIGHT, 'grey');
+            drawImg(sword, swordXpos, swordYpos, SWORD_WIDTH, SWORD_HEIGHT);
             drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
             drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
             playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -185,10 +185,12 @@
             if (backspaceKeyPressed) {
                 swordXpos = PLAYER_SIZE + playerXpos;
                 swordYpos = playerYpos;
-                SWORD_SIZE = 34;
+                SWORD_WIDTH = 100;
+                SWORD_HEIGHT = 100;
 
             } else {
-                SWORD_SIZE = 0;
+                SWORD_WIDTH = 0;
+                SWORD_HEIGHT = 0;
             }
 
         }
