@@ -62,6 +62,9 @@
         var background1 = new Image();
         background1.src = "images/background1.png";
 
+        var gameover = new Image();
+        gameover.src = "images/gameover.png";
+        
         var enemy = new Image();
         enemy.src = "images/enemy.png";
 
@@ -84,7 +87,8 @@
                 EnemyMove()
 
             } else {
-                
+                gameRun = false;
+                drawImg(gameover, 0, 0, canvas.width, canvas.height);
 
             }
         }
@@ -224,7 +228,7 @@
                 enemyXpos + ENEMY_WIDTH > playerXpos &&
                 enemyYpos < playerYpos + PLAYER_SIZE &&
                 enemyYpos + ENEMY_HEIGHT > playerYpos) {
-                alert('you died')
+                gameRun = false;
 
 
             }
