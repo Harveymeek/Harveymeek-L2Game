@@ -89,6 +89,8 @@
             } else {
                 gameRun = false;
                 drawImg(gameover, 0, 0, canvas.width, canvas.height);
+                colorText('Git Gud', canvas.width / 3, canvas.height / 3, '100px Ariel', 'white');
+
 
             }
         }
@@ -122,6 +124,12 @@
         function drawRect(x, y, h, w, color) {
             canvasContext.fillStyle = color;
             canvasContext.fillRect(x, y, h, w);
+        }
+
+        function colorText(msg, x, y, f, c) {
+            canvasContext.font = f;
+            canvasContext.fillStyle = c;
+            canvasContext.fillText(msg, x, y);
         }
 
         function keyPressed(evt) {
