@@ -57,6 +57,8 @@
         var spaceKeyPressed = false;
         var backspaceKeyPressed = false;
 
+        var gameRun = true;
+
         var background1 = new Image();
         background1.src = "images/background1.png";
 
@@ -77,25 +79,27 @@
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
                 drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
                     playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
-                
+
                 PlayerMove()
                 EnemyMove()
 
-
-                function LoadImgAssets() {
-                    imgs = {}
-
-                    imgs.player = new Image();
-                    imgs.player.src = "images/player.png";
-
-                    return imgs;
-                }
-
             } else {
-
+                
 
             }
         }
+
+        function LoadImgAssets() {
+            imgs = {}
+
+            imgs.player = new Image();
+            imgs.player.src = "images/player.png";
+
+            return imgs;
+        }
+
+
+
 
         function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
             canvasContext.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
