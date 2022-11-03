@@ -42,7 +42,13 @@
         var enemyYpos = 850;
         var ENEMY_WIDTH = 100;
         var ENEMY_HEIGHT = 100;
-        var enemyXspeed = 10;
+        var enemyXspeed = 15;
+
+        var bossXpos = 1850;
+        var bossYpos = 850;
+        var BOSS_WIDTH = 100;
+        var BOSS_HEIGHT = 100;
+        var bossXspeed = 15;
 
 
         const D_KEY = 68;
@@ -69,6 +75,11 @@
         var enemy = new Image();
         enemy.src = "images/enemy.png";
 
+        var boss = new Image();
+        boss.src = "images/mmcharger.png";
+        
+        
+
         var sword = new Image();
         sword.src = "images/sword.png";
         var gameRun = true;
@@ -83,7 +94,8 @@
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
                 drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
                     playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
-
+                colorText('score: ' + score, canvas.width / 18, canvas.height / 16, '70px Arial', 'white',09);
+                
                 PlayerMove()
                 EnemyMove()
                 SwordAppear()
@@ -251,6 +263,11 @@
                 enemyYpos < swordYpos + SWORD_HEIGHT &&
                 enemyYpos + ENEMY_HEIGHT > swordYpos) {
                 console.log("hit");
+                score++
+            }
+            if (score > 20) {
+                ENEMY_HEIGHT = 0;
+                ENEMY_WIDTH = 0;
             }
             
 
