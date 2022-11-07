@@ -45,10 +45,10 @@
         var enemyXspeed = 15;
 
         var bossXpos = 1850;
-        var bossYpos = 850;
-        var BOSS_WIDTH = 100;
-        var BOSS_HEIGHT = 100;
-        var bossXspeed = 15;
+        var bossYpos = 660;
+        var BOSS_WIDTH = 500;
+        var BOSS_HEIGHT = 300;
+        var bossXspeed = 30;
 
 
         const D_KEY = 68;
@@ -71,14 +71,14 @@
 
         var gameover = new Image();
         gameover.src = "images/gameover.png";
-        
+
         var enemy = new Image();
         enemy.src = "images/enemy.png";
 
         var boss = new Image();
         boss.src = "images/mmcharger.png";
-        
-        
+
+
 
         var sword = new Image();
         sword.src = "images/sword.png";
@@ -95,11 +95,12 @@
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
                 drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
                     playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
-                colorText('score: ' + score, canvas.width / 18, canvas.height / 16, '70px Arial', 'white',09);
-                
+                colorText('score: ' + score, canvas.width / 18, canvas.height / 16, '70px Arial', 'white', 09);
+
                 PlayerMove()
                 EnemyMove()
                 SwordAppear()
+                BossMove()
 
             } else {
                 gameRun = false;
@@ -118,7 +119,6 @@
 
             return imgs;
         }
-
 
 
 
@@ -180,17 +180,6 @@
             }
         }
 
-        // function SwordAppear() {
-        //     if (backspaceKeyPressed){
-        //         swordXpos = PLAYER_SIZE + playerXpos;
-        //         swordYpos = PLAYER_SIZE + playerYpos;
-        //     } else {
-        //         swordXpos = 0;
-        //     }
-
-        // }
-
-
 
         function PlayerMove() {
 
@@ -216,27 +205,25 @@
                 playerYpos = canvas.height - PLAYER_SIZE * 1.5;
 
             }
-            
-            
+
+
         }
-            
-            function SwordAppear() {
+
+        function SwordAppear() {
             if (backspaceKeyPressed) {
                 swordXpos = PLAYER_SIZE + playerXpos;
                 swordYpos = playerYpos;
                 SWORD_WIDTH = 100;
                 SWORD_HEIGHT = 60;
-                
-            }
 
-            else {
+            } else {
                 SWORD_WIDTH = 0;
-                SWORD_HEIGHT = 0; 
-            
+                SWORD_HEIGHT = 0;
+
             }
         }
 
- 
+
         function drawEnemy() {
             enemies.forEach(function (e, i, array) {
                 drawImg(enemy, e.enemyXpos, e.enemyYpos, e.ENEMY_WIDTH, e.ENEMY_HEIGHT);
@@ -244,14 +231,19 @@
         }
 
 
-    
+
+        function BossMove() {
+
+            bossXpos -= bossXspeed
+        }
 
         function EnemyMove() {
 
-            enemyXpos -= enemyXspeed
+            enemyXpos += enemyXspeed
 
-            if (enemyXpos < canvas.width * -0.1) {
-                enemyXpos = canvas.width;
+
+            if (enemyXpos > canvas.width * 1.1) {
+                enemyXpos = canvas.width * -0.05;
             }
             if (enemyXpos < playerXpos + PLAYER_SIZE &&
                 enemyXpos + ENEMY_WIDTH > playerXpos &&
@@ -269,8 +261,9 @@
             if (score > 20) {
                 ENEMY_HEIGHT = 0;
                 ENEMY_WIDTH = 0;
+                enemyYpos = 12
             }
-            
+
 
         }
     </script>
