@@ -89,7 +89,7 @@
             userName = prompt('whats your user name?')
 
         }
-        
+
         function mainloop() {
             if (gameRun) {
 
@@ -112,8 +112,9 @@
             } else {
                 gameRun = false;
                 drawImg(gameover, 0, 0, canvas.width, canvas.height);
-                colorText('Git Gud', canvas.width / 3, canvas.height / 3, '100px Ariel', 'white');
-
+                colorText('Git Gud', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'red');
+                colorText(userName + ', the boss had ' + bosshp + ' HP left', canvas.width / 4, canvas
+                    .height / 4, '70px Arial', 'white', 09);
 
             }
         }
