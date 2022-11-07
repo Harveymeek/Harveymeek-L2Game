@@ -95,7 +95,8 @@
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
                 drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
                     playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
-                colorText('Mosscharger Boss: ' + bosshp + ' / 500', canvas.width / 18, canvas.height / 16, '70px Arial', 'white', 09);
+                colorText('Mosscharger Boss: ' + bosshp + ' / 500', canvas.width / 18, canvas.height / 16, '70px Arial',
+                    'white', 09);
 
                 PlayerMove()
                 EnemyMove()
@@ -241,7 +242,7 @@
             if (bossXpos < canvas.width * -0.05) {
                 bossXpos = canvas.width * 1.1;
             }
-        
+
             if (bossXpos < swordXpos + SWORD_WIDTH &&
                 bossXpos + BOSS_WIDTH > swordXpos &&
                 bossYpos < swordYpos + SWORD_HEIGHT &&
@@ -249,13 +250,20 @@
                 console.log("hit");
                 bosshp--
             }
-            
+
+            if (bossXpos < playerXpos + PLAYER_SIZE &&
+                bossXpos + BOSS_WIDTH > playerXpos &&
+                bossYpos < playerYpos + PLAYER_SIZE &&
+                bossYpos + BOSS_HEIGHT > playerYpos) {
+                gameRun = false;
+            }
+
             if (bosshp == 0) {
                 BOSS_WIDTH = 0;
                 BOSS_HEIGHT = 0;
                 bossYpos = 12;
             }
-        
+
         }
 
         function EnemyMove() {
