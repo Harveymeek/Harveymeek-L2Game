@@ -64,7 +64,7 @@
 
         var gameRun = true;
 
-        var score = 0
+        var bosshp = 500
 
         var background1 = new Image();
         background1.src = "images/background1.png";
@@ -95,7 +95,7 @@
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
                 drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
                     playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
-                colorText('score: ' + score, canvas.width / 18, canvas.height / 16, '70px Arial', 'white', 09);
+                colorText('Mosscharger Boss: ' + bosshp + ' / 500', canvas.width / 18, canvas.height / 16, '70px Arial', 'white', 09);
 
                 PlayerMove()
                 EnemyMove()
@@ -219,6 +219,7 @@
             } else {
                 SWORD_WIDTH = 0;
                 SWORD_HEIGHT = 0;
+                swordYpos = 12;
 
             }
         }
@@ -246,9 +247,14 @@
                 bossYpos < swordYpos + SWORD_HEIGHT &&
                 bossYpos + BOSS_HEIGHT > swordYpos) {
                 console.log("hit");
-                score++
+                bosshp--
             }
-           
+            
+            if (bosshp == 0) {
+                BOSS_WIDTH = 0;
+                BOSS_HEIGHT = 0;
+                bossYpos = 12;
+            }
         
         }
 
