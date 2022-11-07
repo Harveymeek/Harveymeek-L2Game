@@ -235,6 +235,11 @@
         function BossMove() {
 
             bossXpos -= bossXspeed
+
+
+            if (bossXpos < canvas.width * -0.05) {
+                bossXpos = canvas.width * 1.1;
+            }
         }
 
         function EnemyMove() {
