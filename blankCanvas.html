@@ -23,11 +23,11 @@
         var playerYsource = 0;
         const PLAYER_WIDTH = 1000;
         const PLAYER_HEIGHT = 407;
-        var playerXpos = 50;
+        var playerXpos = 500;
         var playerYpos = 920;
 
 
-        var playerXspeed = 10;
+        var playerXspeed = 12;
         var playerYspeed = 5;
         var PLAYER_SIZE = 45;
 
@@ -45,9 +45,9 @@
         var enemyXspeed = 15;
 
         var bossXpos = 1850;
-        var bossYpos = 660;
-        var BOSS_WIDTH = 500;
-        var BOSS_HEIGHT = 300;
+        var bossYpos = 730;
+        var BOSS_WIDTH = 440;
+        var BOSS_HEIGHT = 220;
         var bossXspeed = 30;
 
 
@@ -79,11 +79,17 @@
         boss.src = "images/mmcharger.png";
 
 
-
         var sword = new Image();
         sword.src = "images/sword.png";
+
         var gameRun = true;
 
+        var userName = '';
+        while (userName == '' || userName == null) {
+            userName = prompt('whats your user name?')
+
+        }
+        
         function mainloop() {
             if (gameRun) {
 
@@ -95,7 +101,8 @@
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
                 drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
                     playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
-                colorText('Mosscharger Boss: ' + bosshp + ' / 500', canvas.width / 18, canvas.height / 16, '70px Arial', 'white', 09);
+                colorText('Mosscharger Boss: ' + bosshp + ' / 500', canvas.width / 18, canvas.height / 16, '70px Arial',
+                    'white', 09);
 
                 PlayerMove()
                 EnemyMove()
@@ -211,14 +218,15 @@
 
         function SwordAppear() {
             if (backspaceKeyPressed) {
-                swordXpos = PLAYER_SIZE + playerXpos;
-                swordYpos = playerYpos;
-                SWORD_WIDTH = 100;
-                SWORD_HEIGHT = 60;
+                swordXpos = playerXpos;
+                swordYpos = PLAYER_SIZE + playerYpos;
+                SWORD_WIDTH = 50;
+                SWORD_HEIGHT = 100;
 
             } else {
                 SWORD_WIDTH = 0;
                 SWORD_HEIGHT = 0;
+                swordYpos = 12;
 
             }
         }
@@ -240,16 +248,28 @@
             if (bossXpos < canvas.width * -0.05) {
                 bossXpos = canvas.width * 1.1;
             }
-        
+
             if (bossXpos < swordXpos + SWORD_WIDTH &&
                 bossXpos + BOSS_WIDTH > swordXpos &&
                 bossYpos < swordYpos + SWORD_HEIGHT &&
                 bossYpos + BOSS_HEIGHT > swordYpos) {
                 console.log("hit");
-                bosshp++
+                bosshp--
             }
-            
-        
+
+            if (bossXpos < playerXpos + PLAYER_SIZE &&
+                bossXpos + BOSS_WIDTH > playerXpos &&
+                bossYpos < playerYpos + PLAYER_SIZE &&
+                bossYpos + BOSS_HEIGHT > playerYpos) {
+                gameRun = false;
+            }
+
+            if (bosshp == 0) {
+                BOSS_WIDTH = 0;
+                BOSS_HEIGHT = 0;
+                bossYpos = 12;
+            }
+
         }
 
         function EnemyMove() {
