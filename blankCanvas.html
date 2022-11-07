@@ -240,6 +240,16 @@
             if (bossXpos < canvas.width * -0.05) {
                 bossXpos = canvas.width * 1.1;
             }
+        
+            if (bossXpos < swordXpos + SWORD_WIDTH &&
+                bossXpos + BOSS_WIDTH > swordXpos &&
+                bossYpos < swordYpos + SWORD_HEIGHT &&
+                bossYpos + BOSS_HEIGHT > swordYpos) {
+                console.log("hit");
+                score++
+            }
+           
+        
         }
 
         function EnemyMove() {
@@ -256,19 +266,6 @@
                 enemyYpos + ENEMY_HEIGHT > playerYpos) {
                 gameRun = false;
             }
-            if (enemyXpos < swordXpos + SWORD_WIDTH &&
-                enemyXpos + ENEMY_WIDTH > swordXpos &&
-                enemyYpos < swordYpos + SWORD_HEIGHT &&
-                enemyYpos + ENEMY_HEIGHT > swordYpos) {
-                console.log("hit");
-                score++
-            }
-            if (score > 20) {
-                ENEMY_HEIGHT = 0;
-                ENEMY_WIDTH = 0;
-                enemyYpos = 12
-            }
-
 
         }
     </script>
