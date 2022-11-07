@@ -42,7 +42,13 @@
         var enemyYpos = 850;
         var ENEMY_WIDTH = 100;
         var ENEMY_HEIGHT = 100;
-        var enemyXspeed = 10;
+        var enemyXspeed = 15;
+
+        var bossXpos = 1850;
+        var bossYpos = 660;
+        var BOSS_WIDTH = 500;
+        var BOSS_HEIGHT = 300;
+        var bossXspeed = 30;
 
 
         const D_KEY = 68;
@@ -58,16 +64,21 @@
 
         var gameRun = true;
 
-        var score = 0
+        var bosshp = 500
 
         var background1 = new Image();
         background1.src = "images/background1.png";
 
         var gameover = new Image();
         gameover.src = "images/gameover.png";
-        
+
         var enemy = new Image();
         enemy.src = "images/enemy.png";
+
+        var boss = new Image();
+        boss.src = "images/mmcharger.png";
+
+
 
         var sword = new Image();
         sword.src = "images/sword.png";
@@ -80,13 +91,16 @@
 
                 drawImg(background1, 0, 0, canvas.width, canvas.height); // big
                 drawImg(sword, swordXpos, swordYpos, SWORD_WIDTH, SWORD_HEIGHT);
+                drawImg(boss, bossXpos, bossYpos, BOSS_WIDTH, BOSS_HEIGHT);
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
                 drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
                     playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
+                colorText('Mosscharger Boss: ' + bosshp + ' / 500', canvas.width / 18, canvas.height / 16, '70px Arial', 'white', 09);
 
                 PlayerMove()
                 EnemyMove()
                 SwordAppear()
+                BossMove()
 
             } else {
                 gameRun = false;
@@ -105,7 +119,6 @@
 
             return imgs;
         }
-
 
 
 
@@ -167,17 +180,6 @@
             }
         }
 
-        // function SwordAppear() {
-        //     if (backspaceKeyPressed){
-        //         swordXpos = PLAYER_SIZE + playerXpos;
-        //         swordYpos = PLAYER_SIZE + playerYpos;
-        //     } else {
-        //         swordXpos = 0;
-        //     }
-
-        // }
-
-
 
         function PlayerMove() {
 
@@ -203,27 +205,25 @@
                 playerYpos = canvas.height - PLAYER_SIZE * 1.5;
 
             }
-            
-            
+
+
         }
-            
-            function SwordAppear() {
+
+        function SwordAppear() {
             if (backspaceKeyPressed) {
                 swordXpos = PLAYER_SIZE + playerXpos;
                 swordYpos = playerYpos;
                 SWORD_WIDTH = 100;
                 SWORD_HEIGHT = 60;
-                
-            }
 
-            else {
+            } else {
                 SWORD_WIDTH = 0;
-                SWORD_HEIGHT = 0; 
-            
+                SWORD_HEIGHT = 0;
+
             }
         }
 
- 
+
         function drawEnemy() {
             enemies.forEach(function (e, i, array) {
                 drawImg(enemy, e.enemyXpos, e.enemyYpos, e.ENEMY_WIDTH, e.ENEMY_HEIGHT);
@@ -231,14 +231,34 @@
         }
 
 
-    
+
+        function BossMove() {
+
+            bossXpos -= bossXspeed
+
+
+            if (bossXpos < canvas.width * -0.05) {
+                bossXpos = canvas.width * 1.1;
+            }
+        
+            if (bossXpos < swordXpos + SWORD_WIDTH &&
+                bossXpos + BOSS_WIDTH > swordXpos &&
+                bossYpos < swordYpos + SWORD_HEIGHT &&
+                bossYpos + BOSS_HEIGHT > swordYpos) {
+                console.log("hit");
+                bosshp++
+            }
+            
+        
+        }
 
         function EnemyMove() {
 
-            enemyXpos -= enemyXspeed
+            enemyXpos += enemyXspeed
 
-            if (enemyXpos < canvas.width * -0.1) {
-                enemyXpos = canvas.width;
+
+            if (enemyXpos > canvas.width * 1.1) {
+                enemyXpos = canvas.width * -0.05;
             }
             if (enemyXpos < playerXpos + PLAYER_SIZE &&
                 enemyXpos + ENEMY_WIDTH > playerXpos &&
@@ -246,13 +266,6 @@
                 enemyYpos + ENEMY_HEIGHT > playerYpos) {
                 gameRun = false;
             }
-            if (enemyXpos < swordXpos + SWORD_WIDTH &&
-                enemyXpos + ENEMY_WIDTH > swordXpos &&
-                enemyYpos < swordYpos + SWORD_HEIGHT &&
-                enemyYpos + ENEMY_HEIGHT > swordYpos) {
-                console.log("hit");
-            }
-            
 
         }
     </script>
