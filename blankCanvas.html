@@ -62,9 +62,8 @@
         var spaceKeyPressed = false;
         var backspaceKeyPressed = false;
 
-        
 
-        var bosshp = 50;
+        var bosshp = 200;
 
         var background1 = new Image();
         background1.src = "images/background1.png";
@@ -243,7 +242,6 @@
         }
 
 
-
         function BossMove() {
 
             bossXpos -= bossXspeed
@@ -277,6 +275,8 @@
                 ENEMY_HEIGHT = 0;
                 enemyYpos = 12;
                 colorRect(0, 0, canvas.width, canvas.height, 'black');
+                colorText('VICTORY', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'lime');
+                colorText('you defeated the Mosscharger', canvas.width / 3.7, canvas.height / 4, '70px Arial', 'white');
             }
 
         }
