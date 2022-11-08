@@ -64,7 +64,7 @@
 
         var gameRun = true;
 
-        var bosshp = 500
+        var bosshp = 200;
 
         var background1 = new Image();
         background1.src = "images/background1.png";
@@ -84,6 +84,8 @@
 
         var gameRun = true;
 
+        var gameWin = false;
+
         var userName = '';
         while (userName == '' || userName == null) {
             userName = prompt('whats your user name?')
@@ -94,14 +96,13 @@
             if (gameRun) {
 
 
-
                 drawImg(background1, 0, 0, canvas.width, canvas.height); // big
                 drawImg(sword, swordXpos, swordYpos, SWORD_WIDTH, SWORD_HEIGHT);
                 drawImg(boss, bossXpos, bossYpos, BOSS_WIDTH, BOSS_HEIGHT);
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
                 drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
                     playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
-                colorText('Mosscharger Boss: ' + bosshp + ' / 500', canvas.width / 18, canvas.height / 16, '70px Arial',
+                colorText('Mosscharger Boss: ' + bosshp + ' / 200', canvas.width / 18, canvas.height / 16, '70px Arial',
                     'white', 09);
 
                 PlayerMove()
@@ -112,12 +113,18 @@
             } else {
                 gameRun = false;
                 drawImg(gameover, 0, 0, canvas.width, canvas.height);
-                colorText('Git Gud', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'red');
+                colorText('DEFEAT', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'red');
                 colorText(userName + ', the boss had ' + bosshp + ' HP left', canvas.width / 4, canvas
                     .height / 4, '70px Arial', 'white', 09);
 
+             
+                gameWin = true
+                
+
             }
+
         }
+
 
         function LoadImgAssets() {
             imgs = {}
@@ -263,6 +270,7 @@
                 bossYpos < playerYpos + PLAYER_SIZE &&
                 bossYpos + BOSS_HEIGHT > playerYpos) {
                 gameRun = false;
+
             }
 
             if (bosshp == 0) {
