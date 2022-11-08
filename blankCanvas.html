@@ -62,9 +62,9 @@
         var spaceKeyPressed = false;
         var backspaceKeyPressed = false;
 
-        var gameRun = true;
+        
 
-        var bosshp = 200;
+        var bosshp = 50;
 
         var background1 = new Image();
         background1.src = "images/background1.png";
@@ -84,7 +84,6 @@
 
         var gameRun = true;
 
-        var gameWin = false;
 
         var userName = '';
         while (userName == '' || userName == null) {
@@ -117,9 +116,6 @@
                 colorText(userName + ', the boss had ' + bosshp + ' HP left', canvas.width / 4, canvas
                     .height / 4, '70px Arial', 'white', 09);
 
-             
-                gameWin = true
-                
 
             }
 
@@ -277,6 +273,10 @@
                 BOSS_WIDTH = 0;
                 BOSS_HEIGHT = 0;
                 bossYpos = 12;
+                ENEMY_WIDTH = 0;
+                ENEMY_HEIGHT = 0;
+                enemyYpos = 12;
+                colorRect(0, 0, canvas.width, canvas.height, 'black');
             }
 
         }
