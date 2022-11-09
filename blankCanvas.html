@@ -63,7 +63,7 @@
         var backspaceKeyPressed = false;
 
 
-        var bosshp = 20;
+        var bosshp = 200;
 
         var background1 = new Image();
         background1.src = "images/background1.png";
@@ -71,8 +71,8 @@
         var gameover = new Image();
         gameover.src = "images/gameover.png";
 
-        var gamwin = new Image();
-        gameover.src = "images/gamewin.png";
+        var gamewin = new Image();
+        gamewin.src = "images/gamewin.png";
 
         var enemy = new Image();
         enemy.src = "images/enemy.png";
@@ -86,7 +86,8 @@
 
         var gameRun = true;
 
-
+        var difficulty = '';
+        var pass = false;
         var userName = '';
         while (userName == '' || userName == null) {
             userName = prompt('whats your user name?')
@@ -110,6 +111,11 @@
                 EnemyMove()
                 SwordAppear()
                 BossMove()
+
+                for (var i = 0; i < eNum; i++) {
+                    makeEnemy();
+                }
+
 
             } else {
                 gameRun = false;
@@ -277,7 +283,7 @@
                 ENEMY_WIDTH = 0;
                 ENEMY_HEIGHT = 0;
                 enemyYpos = 12;
-                colorRect(0, 0, canvas.width, canvas.height, 'black');
+                drawImg(gamewin, 0, 0, canvas.width, canvas.height);
                 colorText('VICTORY', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'lime');
                 colorText('you defeated the Mosscharger', canvas.width / 3.7, canvas.height / 4, '70px Arial', 'white');
             }
