@@ -88,6 +88,16 @@
 
         var difficulty = '';
         var pass = false;
+
+        while (pass == false) {
+            difficulty = prompt('which difficulty do you want? attuned (easy), ascended (medium) or radient (hard)');
+            if (difficulty != null) {
+                difficulty = difficulty.toLowerCase()
+                if (difficulty == 'attuned' || difficulty == 'ascended' || difficulty == 'radient')
+                    pass = true;
+            }
+        }
+
         var userName = '';
         while (userName == '' || userName == null) {
             userName = prompt('whats your user name?')
