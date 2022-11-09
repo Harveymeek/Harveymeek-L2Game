@@ -63,8 +63,6 @@
         var backspaceKeyPressed = false;
 
 
-        var bosshp = 200;
-
         var background1 = new Image();
         background1.src = "images/background1.png";
 
@@ -96,6 +94,24 @@
                 if (difficulty == 'attuned' || difficulty == 'ascended' || difficulty == 'radient')
                     pass = true;
             }
+        }
+
+        var color = '';
+        var bosshp = 100;
+        
+        if (difficulty == 'attuned') {
+            bosshp = 100
+            color = 'bronze';
+        }
+
+        if (difficulty == 'ascended') {
+            bosshp = 200
+            color = 'silver';
+        }
+
+        if (difficulty == 'raident') {
+            bosshp = 300
+            color = 'gold';
         }
 
         var userName = '';
