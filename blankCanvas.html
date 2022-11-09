@@ -88,30 +88,34 @@
         var pass = false;
 
         while (pass == false) {
-            difficulty = prompt('which difficulty do you want? attuned (easy), ascended (medium) or radient (hard)');
+            difficulty = prompt('which difficulty do you want? attuned (easy), ascended (medium) or radiant (hard)');
             if (difficulty != null) {
                 difficulty = difficulty.toLowerCase()
-                if (difficulty == 'attuned' || difficulty == 'ascended' || difficulty == 'radient')
+                if (difficulty == 'attuned' || difficulty == 'ascended' || difficulty == 'radiant')
                     pass = true;
             }
         }
 
         var color = '';
         var bosshp = 100;
-        
+        var bosshpd = 100;
+
         if (difficulty == 'attuned') {
             bosshp = 100
-            color = 'bronze';
+            color = 'chocolate';
+            bossphd = 100
         }
 
         if (difficulty == 'ascended') {
             bosshp = 200
             color = 'silver';
+            bosshpd = 200
         }
 
-        if (difficulty == 'raident') {
+        if (difficulty == 'radiant') {
             bosshp = 300
             color = 'gold';
+            bosshpd = 300
         }
 
         var userName = '';
@@ -123,16 +127,18 @@
         function mainloop() {
             if (gameRun) {
 
-
                 drawImg(background1, 0, 0, canvas.width, canvas.height); // big
                 drawImg(sword, swordXpos, swordYpos, SWORD_WIDTH, SWORD_HEIGHT);
                 drawImg(boss, bossXpos, bossYpos, BOSS_WIDTH, BOSS_HEIGHT);
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
                 drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
                     playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
-                colorText('Mosscharger Boss: ' + bosshp + ' / 200', canvas.width / 18, canvas.height / 16, '70px Arial',
+                colorText('Mosscharger Boss: ', canvas.width / 18, canvas.height / 16, '70px Arial',
                     'white', 09);
-
+                colorText(bosshp + ' / ' + bosshpd, canvas.width / 2.5, canvas.height / 16, '70px Arial', color, 09);
+                colorText('difficulty: ', canvas.width / 18, canvas.height / 7, '50px Arial', 'white', 09);
+                colorText(difficulty, canvas.width / 5, canvas.height / 7, '50px Arial', color, 09);
+                
                 PlayerMove()
                 EnemyMove()
                 SwordAppear()
