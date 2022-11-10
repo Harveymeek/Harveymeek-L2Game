@@ -260,6 +260,26 @@
 
         }
 
+
+        function spriteMove() {
+            playerXsource = playerSpriteArray[Math.floor(playerSpriteNum)][0];
+            playerYsource = playerSpriteArray[Math.floor(playerSpriteNum)][1];
+
+            if (aKeyPressed) {
+                playerSpriteNum += antiFrameRate;
+                if (playerSpriteNum < 0 || playerSprite > 3) {
+                    playerSprite = 0;
+                }
+            }
+
+            if (dKeyPressed) {
+                playerSpriteNum += antiFrameRate;
+                if (playerSpriteNum < 10 || playerSprite > 3) {
+                    playerSprite = 0;
+                }
+            }
+
+        }
         function SwordAppear() {
             if (backspaceKeyPressed) {
                 swordXpos = playerXpos;
