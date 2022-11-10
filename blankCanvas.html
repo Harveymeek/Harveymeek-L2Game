@@ -23,17 +23,15 @@
         var playerYsource = 0;
         const PLAYER_WIDTH = 1000;
         const PLAYER_HEIGHT = 407;
-        var playerXpos = 50;
-        var playerYpos = 920;
-
-
+        var playerXpos = 0;
+        var playerYpos = 0;
         var playerXspeed = 12;
         var playerYspeed = 5;
         var PLAYER_SIZE = 45;
 
 
-        var swordXpos = 200;
-        var swordYpos = 200;
+        var swordXpos = playerXpos;
+        var swordYpos = PLAYER_SIZE + playerYpos;
         var SWORD_WIDTH = 100;
         var SWORD_HEIGHT = 100;
 
@@ -62,15 +60,15 @@
         var spaceKeyPressed = false;
         var backspaceKeyPressed = false;
 
-        var gameRun = true;
-
-        var bosshp = 500
 
         var background1 = new Image();
         background1.src = "images/background1.png";
 
         var gameover = new Image();
         gameover.src = "images/gameover.png";
+
+        var gamewin = new Image();
+        gamewin.src = "images/gamewin.png";
 
         var enemy = new Image();
         enemy.src = "images/enemy.png";
@@ -79,38 +77,99 @@
         boss.src = "images/mmcharger.png";
 
 
-
         var sword = new Image();
         sword.src = "images/sword.png";
+
         var gameRun = true;
+
+        var difficulty = '';
+        var pass = false;
+
+        while (pass == false) {
+            difficulty = prompt('which difficulty do you want? easy (Attuned), medium (Ascended) or hard (Radiant)');
+            if (difficulty != null) {
+                difficulty = difficulty.toLowerCase()
+                if (difficulty == 'easy' || difficulty == 'medium' || difficulty == 'hard')
+                    pass = true;
+            }
+        }
+
+        var color = '';
+        var bosshp = 100;
+        var bosshpd = 100;
+
+        if (difficulty == 'easy') {
+            bosshp = 100
+            color = 'chocolate';
+            bossphd = 100
+            difficulty2 = 'Attuned'
+
+        }
+
+        if (difficulty == 'medium') {
+            bosshp = 200
+            color = 'silver';
+            bosshpd = 200
+            difficulty2 = 'Ascended'
+        }
+
+        if (difficulty == 'hard') {
+            bosshp = 300
+            color = 'gold';
+            bosshpd = 300
+            difficulty2 = 'Radiant'
+        }
+
+        var userName = '';
+        while (userName == '' || userName == null) {
+            userName = prompt('whats your user name?')
+        }
+
+        var setup = true;
 
         function mainloop() {
             if (gameRun) {
 
+                if (setup) {
+                    playerXos = canvas.width / 3;
+                    playerYpos = canvas.width * .92;
 
-
+                    setup = false;
+                }
                 drawImg(background1, 0, 0, canvas.width, canvas.height); // big
                 drawImg(sword, swordXpos, swordYpos, SWORD_WIDTH, SWORD_HEIGHT);
                 drawImg(boss, bossXpos, bossYpos, BOSS_WIDTH, BOSS_HEIGHT);
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
                 drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
                     playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
-                colorText('Mosscharger Boss: ' + bosshp + ' / 500', canvas.width / 18, canvas.height / 16, '70px Arial',
+                colorText('Mosscharger Boss: ', canvas.width / 18, canvas.height / 16, '70px Arial',
                     'white', 09);
+                colorText(bosshp + ' / ' + bosshpd, canvas.width / 2.5, canvas.height / 16, '70px Arial', color, 09);
+                colorText('difficulty: ', canvas.width / 18, canvas.height / 7, '50px Arial', 'white', 09);
+                colorText(difficulty2, canvas.width / 5, canvas.height / 7, '50px Arial', color, 09);
 
                 PlayerMove()
                 EnemyMove()
                 SwordAppear()
                 BossMove()
 
+                for (var i = 0; i < eNum; i++) {
+                    makeEnemy();
+                }
+
+
             } else {
                 gameRun = false;
                 drawImg(gameover, 0, 0, canvas.width, canvas.height);
-                colorText('Git Gud', canvas.width / 3, canvas.height / 3, '100px Ariel', 'white');
+                colorText('DEFEAT', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'red');
+                colorText(userName + ', the boss had ' + bosshp + ' HP left', canvas.width / 4, canvas
+                    .height / 4, '70px Arial', 'white', 09);
 
 
             }
+
         }
+
 
         function LoadImgAssets() {
             imgs = {}
@@ -127,19 +186,8 @@
             canvasContext.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
         }
 
-
-        function colorRect(x, y, w, h, c) {
-            canvasContext.fillStyle = c;
-            canvasContext.fillRect(x, y, w, h);
-        }
-
         function drawImg(src, x, y, w, h) {
             canvasContext.drawImage(src, x, y, w, h)
-        }
-
-        function drawRect(x, y, h, w, color) {
-            canvasContext.fillStyle = color;
-            canvasContext.fillRect(x, y, h, w);
         }
 
         function colorText(msg, x, y, f, c) {
@@ -210,6 +258,33 @@
 
         }
 
+
+        function spriteMove() {
+            playerXsource = playerSpriteArray[Math.floor(playerSpriteNum)][0];
+            playerYsource = playerSpriteArray[Math.floor(playerSpriteNum)][1];
+
+            if (aKeyPressed) {
+                playerSpriteNum += antiFrameRate;
+                if (playerSpriteNum < 0 || playerSprite > 3) {
+                    playerSprite = 0;
+                }
+            }
+
+            if (dKeyPressed) {
+                playerSpriteNum += antiFrameRate;
+                if (playerSpriteNum < 10 || playerSprite > 3) {
+                    playerSprite = 0;
+                }
+            }
+
+            for (i = 0; i < PLAYER_SPRITES; i++) {
+                playerSpriteArray[i] = new Array(2);
+                playerSpriteArray[i][0] = PLAYER_WIDTH * (i % 4);
+                playerSpriteArray[i][0] = PLAYER_HEIGHT * playerSpriteSheetCols;
+                console.log(playerSpriteArray[i]);
+            }
+        }
+
         function SwordAppear() {
             if (backspaceKeyPressed) {
                 swordXpos = playerXpos;
@@ -220,7 +295,7 @@
             } else {
                 SWORD_WIDTH = 0;
                 SWORD_HEIGHT = 0;
-                swordYpos = 12;
+                swordYpos = canvas.height * 0.01;
 
             }
         }
@@ -231,7 +306,6 @@
                 drawImg(enemy, e.enemyXpos, e.enemyYpos, e.ENEMY_WIDTH, e.ENEMY_HEIGHT);
             });
         }
-
 
 
         function BossMove() {
@@ -256,12 +330,19 @@
                 bossYpos < playerYpos + PLAYER_SIZE &&
                 bossYpos + BOSS_HEIGHT > playerYpos) {
                 gameRun = false;
+
             }
 
             if (bosshp == 0) {
                 BOSS_WIDTH = 0;
                 BOSS_HEIGHT = 0;
                 bossYpos = 12;
+                ENEMY_WIDTH = 0;
+                ENEMY_HEIGHT = 0;
+                enemyYpos = 12;
+                drawImg(gamewin, 0, 0, canvas.width, canvas.height);
+                colorText('VICTORY', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'lime');
+                colorText('you defeated the Mosscharger', canvas.width / 3.7, canvas.height / 4, '70px Arial', 'white');
             }
 
         }
