@@ -19,8 +19,8 @@
             setInterval(mainloop, 1000 / 50);
         }
 
-        var playerXsource = 0;
-        var playerYsource = 0;
+        var playerXsource = '';
+        var playerYsource = '';
         var playerXpos = '';
         var playerYpos = '';
         var PLAYER_SIZE = 45;
@@ -34,9 +34,8 @@
         const PLAYER_SPRITES = 12;
         var playerSpriteNum = 0;
         var playerSpriteSheetCols = 0;
-        var aniFrameRate = 0.5;
+        var aniFrameRate = 0.3;
         
-
 
         var swordXpos = playerXpos;
         var swordYpos = PLAYER_SIZE + playerYpos;
@@ -52,9 +51,9 @@
 
 
         var bossXpos = 1850;
-        var bossYpos = 730;
-        var BOSS_WIDTH = 440;
-        var BOSS_HEIGHT = 220;
+        var bossYpos = 750;
+        var BOSS_WIDTH = 400;
+        var BOSS_HEIGHT = 200;
         var bossXspeed = 30;
 
 
@@ -110,6 +109,7 @@
         if (difficulty == 'easy') {
             bosshp = 100
             color = 'chocolate';
+            enemyXspeed = 10
             bossphd = 100
             difficulty2 = 'Attuned'
 
@@ -118,6 +118,7 @@
         if (difficulty == 'medium') {
             bosshp = 200
             color = 'silver';
+            enemyXspeed = 15
             bosshpd = 200
             difficulty2 = 'Ascended'
         }
@@ -125,6 +126,7 @@
         if (difficulty == 'hard') {
             bosshp = 300
             color = 'gold';
+            enemyXspeed = 20
             bosshpd = 300
             difficulty2 = 'Radiant'
         }
@@ -161,9 +163,7 @@
                 EnemyMove()
                 SwordAppear()
                 BossMove()
-                for (var i = 0; i < eNum; i++) {
-                    makeEnemy();
-                }
+                
 
 
             } else {
@@ -206,14 +206,14 @@
             
             if (aKeyPressed) {
                 playerSpriteNum += aniFrameRate;
-                if (playerSpriteNum < 12 || playerSpriteNum > 12) {
+                if (playerSpriteNum > 6) {
                     playerSpriteNum = 0;
                 }
             }
 
             if (dKeyPressed) {
                 playerSpriteNum += aniFrameRate;
-                if (playerSpriteNum < 10 || playerSpriteNum > 6) {
+                if (playerSpriteNum > 11) {
                     playerSpriteNum = 7;
                 }
             }
@@ -341,13 +341,13 @@
                 bosshp--
             }
 
-          //  if (bossXpos < playerXpos + PLAYER_SIZE &&
-           //     bossXpos + BOSS_WIDTH > playerXpos &&
-             //   bossYpos < playerYpos + PLAYER_SIZE &&
-             //   bossYpos + BOSS_HEIGHT > playerYpos) {
-             //   gameRun = false;
+           if (bossXpos < playerXpos + PLAYER_SIZE &&
+               bossXpos + BOSS_WIDTH > playerXpos &&
+                bossYpos < playerYpos + PLAYER_SIZE &&
+                bossYpos + BOSS_HEIGHT > playerYpos) {
+                gameRun = false;
 
-           //   gameRun}
+              gameRun}
 
             if (bosshp == 0) {
                 BOSS_WIDTH = 0;
@@ -368,16 +368,16 @@
 
             enemyXpos += enemyXspeed
 
-
+            
             if (enemyXpos > canvas.width * 1.1) {
                 enemyXpos = canvas.width * -0.05;
             }
-          //  if (enemyXpos < playerXpos + PLAYER_SIZE &&
-           //     enemyXpos + ENEMY_WIDTH > playerXpos &&
-           //     enemyYpos < playerYpos + PLAYER_SIZE &&
-           //     enemyYpos + ENEMY_HEIGHT > playerYpos) {
-            //    gameRun = false;
-          //  }
+            if (enemyXpos < playerXpos + PLAYER_SIZE &&
+                enemyXpos + ENEMY_WIDTH > playerXpos &&
+                enemyYpos < playerYpos + PLAYER_SIZE &&
+                enemyYpos + ENEMY_HEIGHT > playerYpos) {
+                gameRun = false;
+            }
 
         }
     </script>
