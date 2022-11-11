@@ -34,7 +34,7 @@
         const PLAYER_SPRITES = 12;
         var playerSpriteNum = 0;
         var playerSpriteSheetCols = 0;
-        var aniFrameRate = 0.5;
+        var aniFrameRate = 0.3;
         
 
 
@@ -206,14 +206,14 @@
             
             if (aKeyPressed) {
                 playerSpriteNum += aniFrameRate;
-                if (playerSpriteNum < 12 || playerSpriteNum > 12) {
+                if (playerSpriteNum > 6) {
                     playerSpriteNum = 0;
                 }
             }
 
             if (dKeyPressed) {
                 playerSpriteNum += aniFrameRate;
-                if (playerSpriteNum < 10 || playerSpriteNum > 6) {
+                if (playerSpriteNum > 11) {
                     playerSpriteNum = 7;
                 }
             }
