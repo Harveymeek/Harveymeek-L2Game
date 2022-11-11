@@ -37,7 +37,6 @@
         var aniFrameRate = 0.3;
         
 
-
         var swordXpos = playerXpos;
         var swordYpos = PLAYER_SIZE + playerYpos;
         var SWORD_WIDTH = 100;
@@ -52,9 +51,9 @@
 
 
         var bossXpos = 1850;
-        var bossYpos = 730;
-        var BOSS_WIDTH = 440;
-        var BOSS_HEIGHT = 220;
+        var bossYpos = 750;
+        var BOSS_WIDTH = 400;
+        var BOSS_HEIGHT = 200;
         var bossXspeed = 30;
 
 
@@ -369,7 +368,7 @@
 
             enemyXpos += enemyXspeed
 
-
+            
             if (enemyXpos > canvas.width * 1.1) {
                 enemyXpos = canvas.width * -0.05;
             }
