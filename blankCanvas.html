@@ -9,7 +9,7 @@
         window.onload = function () {
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
-            imageAssets = LoadImgAssets();
+            imageAssets = loadImgAssets();
 
             document.body.style.background = 'black';
             document.addEventListener('keydown', keyPressed);
@@ -21,19 +21,25 @@
 
         var playerXsource = 0;
         var playerYsource = 0;
-        const PLAYER_WIDTH = 1000;
-        const PLAYER_HEIGHT = 407;
-        var playerXpos = 500;
-        var playerYpos = 920;
-
-
+        var playerXpos = '';
+        var playerYpos = '';
+        var PLAYER_SIZE = 45;
+        const PLAYER_WIDTH = 80;
+        const PLAYER_HEIGHT = 90;
         var playerXspeed = 12;
         var playerYspeed = 5;
-        var PLAYER_SIZE = 45;
+        
+
+        var playerSpriteArray = [];
+        const PLAYER_SPRITES = 12;
+        var playerSpriteNum = 0;
+        var playerSpriteSheetCols = 0;
+        var aniFrameRate = 0.5;
+        
 
 
-        var swordXpos = 200;
-        var swordYpos = 200;
+        var swordXpos = playerXpos;
+        var swordYpos = PLAYER_SIZE + playerYpos;
         var SWORD_WIDTH = 100;
         var SWORD_HEIGHT = 100;
 
@@ -43,6 +49,7 @@
         var ENEMY_WIDTH = 100;
         var ENEMY_HEIGHT = 100;
         var enemyXspeed = 15;
+
 
         var bossXpos = 1850;
         var bossYpos = 730;
@@ -105,7 +112,7 @@
             color = 'chocolate';
             bossphd = 100
             difficulty2 = 'Attuned'
-            
+
         }
 
         if (difficulty == 'medium') {
@@ -125,29 +132,35 @@
         var userName = '';
         while (userName == '' || userName == null) {
             userName = prompt('whats your user name?')
-
         }
+
+        var setup = true;
 
         function mainloop() {
             if (gameRun) {
 
+                if (setup) {
+                    playerXpos = canvas.width * 0.4
+                    playerYpos = canvas.height * .92;
+
+                    setup = false;
+                }
                 drawImg(background1, 0, 0, canvas.width, canvas.height); // big
                 drawImg(sword, swordXpos, swordYpos, SWORD_WIDTH, SWORD_HEIGHT);
                 drawImg(boss, bossXpos, bossYpos, BOSS_WIDTH, BOSS_HEIGHT);
                 drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
-                drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
-                    playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
+                drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos, playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
                 colorText('Mosscharger Boss: ', canvas.width / 18, canvas.height / 16, '70px Arial',
                     'white', 09);
                 colorText(bosshp + ' / ' + bosshpd, canvas.width / 2.5, canvas.height / 16, '70px Arial', color, 09);
                 colorText('difficulty: ', canvas.width / 18, canvas.height / 7, '50px Arial', 'white', 09);
                 colorText(difficulty2, canvas.width / 5, canvas.height / 7, '50px Arial', color, 09);
-                
+
                 PlayerMove()
+                spriteMove()
                 EnemyMove()
                 SwordAppear()
                 BossMove()
-
                 for (var i = 0; i < eNum; i++) {
                     makeEnemy();
                 }
@@ -166,34 +179,55 @@
         }
 
 
-        function LoadImgAssets() {
-            imgs = {}
+        function loadImgAssets() {
+            imgs = {};
 
             imgs.player = new Image();
             imgs.player.src = "images/player.png";
 
             return imgs;
         }
+ 
+        for (i = 0; i < PLAYER_SPRITES; i++) {
+            playerSpriteArray[i] = new Array(2);
+            playerSpriteArray[i][0] = PLAYER_WIDTH * (i % 12);
+            
 
+            playerSpriteArray[i][1] = PLAYER_HEIGHT * playerSpriteSheetCols;
+            console.log(playerSpriteArray[i]);
 
+            
+        
+        }
 
+        function spriteMove() {
+            playerXsource = playerSpriteArray[Math.floor(playerSpriteNum)][0];
+            playerYsource = playerSpriteArray[Math.floor(playerSpriteNum)][1];
+            
+            if (aKeyPressed) {
+                playerSpriteNum += aniFrameRate;
+                if (playerSpriteNum < 12 || playerSpriteNum > 12) {
+                    playerSpriteNum = 0;
+                }
+            }
+
+            if (dKeyPressed) {
+                playerSpriteNum += aniFrameRate;
+                if (playerSpriteNum < 10 || playerSpriteNum > 6) {
+                    playerSpriteNum = 7;
+                }
+            }
+            
+            
+            
+        
+        }
         function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
             canvasContext.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
         }
 
-
-        function colorRect(x, y, w, h, c) {
-            canvasContext.fillStyle = c;
-            canvasContext.fillRect(x, y, w, h);
-        }
-
         function drawImg(src, x, y, w, h) {
             canvasContext.drawImage(src, x, y, w, h)
-        }
-
-        function drawRect(x, y, h, w, color) {
-            canvasContext.fillStyle = color;
-            canvasContext.fillRect(x, y, h, w);
         }
 
         function colorText(msg, x, y, f, c) {
@@ -265,31 +299,8 @@
         }
 
 
-        function spriteMove() {
-            playerXsource = playerSpriteArray[Math.floor(playerSpriteNum)][0];
-            playerYsource = playerSpriteArray[Math.floor(playerSpriteNum)][1];
+        
 
-            if (aKeyPressed) {
-                playerSpriteNum += antiFrameRate;
-                if (playerSpriteNum < 0 || playerSprite > 3) {
-                    playerSprite = 0;
-                }
-            }
-
-            if (dKeyPressed) {
-                playerSpriteNum += antiFrameRate;
-                if (playerSpriteNum < 10 || playerSprite > 3) {
-                    playerSprite = 0;
-                }
-            }
-            
-            for (i = 0; i < PLAYER_SPRITES; i++) {
-                playerSpriteArray[i] =  new Array(2);
-                playerSpriteArray[i][0] = PLAYER_WIDTH * (i % 4);
-                playerSpriteArray[i][0] = PLAYER_HEIGHT * playerSpriteSheetCols;
-                console.log(playerSpriteArray[i]);
-            }
-        }
         function SwordAppear() {
             if (backspaceKeyPressed) {
                 swordXpos = playerXpos;
@@ -300,7 +311,7 @@
             } else {
                 SWORD_WIDTH = 0;
                 SWORD_HEIGHT = 0;
-                swordYpos = 12;
+                swordYpos = canvas.height * 0.01;
 
             }
         }
@@ -330,24 +341,25 @@
                 bosshp--
             }
 
-            if (bossXpos < playerXpos + PLAYER_SIZE &&
-                bossXpos + BOSS_WIDTH > playerXpos &&
-                bossYpos < playerYpos + PLAYER_SIZE &&
-                bossYpos + BOSS_HEIGHT > playerYpos) {
-                gameRun = false;
+          //  if (bossXpos < playerXpos + PLAYER_SIZE &&
+           //     bossXpos + BOSS_WIDTH > playerXpos &&
+             //   bossYpos < playerYpos + PLAYER_SIZE &&
+             //   bossYpos + BOSS_HEIGHT > playerYpos) {
+             //   gameRun = false;
 
-            }
+           //   gameRun}
 
             if (bosshp == 0) {
                 BOSS_WIDTH = 0;
                 BOSS_HEIGHT = 0;
-                bossYpos = 12;
+                bossYpos = canvas.height * 0.01;
                 ENEMY_WIDTH = 0;
                 ENEMY_HEIGHT = 0;
-                enemyYpos = 12;
+                enemyYpos = canvas.height * 0.01;
                 drawImg(gamewin, 0, 0, canvas.width, canvas.height);
                 colorText('VICTORY', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'lime');
-                colorText('you defeated the Mosscharger', canvas.width / 3.7, canvas.height / 4, '70px Arial', 'white');
+                colorText(userName + ', you defeated the Mosscharger', canvas.width / 4, canvas.height / 4,
+                    '70px Arial', 'white');
             }
 
         }
@@ -360,12 +372,12 @@
             if (enemyXpos > canvas.width * 1.1) {
                 enemyXpos = canvas.width * -0.05;
             }
-            if (enemyXpos < playerXpos + PLAYER_SIZE &&
-                enemyXpos + ENEMY_WIDTH > playerXpos &&
-                enemyYpos < playerYpos + PLAYER_SIZE &&
-                enemyYpos + ENEMY_HEIGHT > playerYpos) {
-                gameRun = false;
-            }
+          //  if (enemyXpos < playerXpos + PLAYER_SIZE &&
+           //     enemyXpos + ENEMY_WIDTH > playerXpos &&
+           //     enemyYpos < playerYpos + PLAYER_SIZE &&
+           //     enemyYpos + ENEMY_HEIGHT > playerYpos) {
+            //    gameRun = false;
+          //  }
 
         }
     </script>
