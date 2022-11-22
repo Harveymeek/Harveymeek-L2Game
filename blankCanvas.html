@@ -51,10 +51,10 @@
         // enemy variables
 
         var bossXpos = 1850;
-        var bossYpos = 750;
-        var BOSS_WIDTH = 400;
-        var BOSS_HEIGHT = 200;
-        var bossXspeed = 20;
+        var bossYpos = 800;
+        var BOSS_WIDTH = 250;
+        var BOSS_HEIGHT = 150;
+        var bossXspeed = 5;
         // boss variables
 
         const D_KEY = 68;
@@ -142,6 +142,11 @@
 
         var setup = true;
 
+
+        if (setup = true) {
+
+            alert('Welcome to the game: Solid Knight, use A and D keys to move left and right, and spacebar to jump. Deal damage to the slow moving boss by holding backspace to swing your sword when above it , also make sure to hold right when jumping over the boss        press Ctrl R to restart the game')
+        }
         function mainloop() { // makes the game run, establishes and makes all variables, functions and drawn images true
             if (gameRun) {
 
@@ -176,7 +181,8 @@
                 drawImg(gameover, 0, 0, canvas.width, canvas.height); // changes the canvas image when boss or enemy hits player
                 colorText('DEFEAT', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'red'); // displays defeat message
                 colorText(userName + ', the boss had ' + bosshp + ' HP left', canvas.width / 4, canvas
-                    .height / 4, '70px Arial', 'white', 09); // displays username and boss hp left
+                    .height / 4, '70px Arial', 'white', 09);
+                colorText('press Ctrl R to restart', canvas.width / 2.7, canvas.height / 2.5, '50px Arial', 'white'); // displays username and boss hp left
 
 
             }
@@ -289,7 +295,7 @@
             }
 
             playerYpos += playerYspeed;
-            playerYspeed += 2;
+            playerYspeed += 1.5;
 
             if (playerYpos <= 0) {
                 playerYpos = 0;
@@ -312,7 +318,7 @@
                 swordXpos = playerXpos;
                 swordYpos = PLAYER_SIZE + playerYpos;
                 SWORD_WIDTH = 50;
-                SWORD_HEIGHT = 100;
+                SWORD_HEIGHT = 190;
                 // variables for sword when backspace key is pressed
 
             } else {
