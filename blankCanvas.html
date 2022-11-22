@@ -17,62 +17,61 @@
 
 
             setInterval(mainloop, 1000 / 50);
-        }
+        } // end of function
 
-        var playerXsource = 0;
-        var playerYsource = 0;
-        var playerXpos = '';
-        var playerYpos = '';
-        var PLAYER_SIZE = 45;
-        const PLAYER_WIDTH = 80;
+        var playerXsource = ''; 
+        var playerYsource = ''; 
+        var playerXpos = ''; 
+        var playerYpos = ''; 
+        var PLAYER_SIZE = 45; 
+        const PLAYER_WIDTH = 80; 
         const PLAYER_HEIGHT = 90;
-        var playerXspeed = 12;
-        var playerYspeed = 5;
-        
+        var playerXspeed = 12; 
+        var playerYspeed = 5; 
+        // player variables
 
         var playerSpriteArray = [];
         const PLAYER_SPRITES = 12;
         var playerSpriteNum = 0;
         var playerSpriteSheetCols = 0;
         var aniFrameRate = 0.3;
-        
-
+        // player sprite variables
 
         var swordXpos = playerXpos;
         var swordYpos = PLAYER_SIZE + playerYpos;
         var SWORD_WIDTH = 100;
         var SWORD_HEIGHT = 100;
-
+        // sword variables
 
         var enemyXpos = 1850;
         var enemyYpos = 850;
         var ENEMY_WIDTH = 100;
         var ENEMY_HEIGHT = 100;
         var enemyXspeed = 15;
-
+        // enemy variables
 
         var bossXpos = 1850;
-        var bossYpos = 730;
-        var BOSS_WIDTH = 440;
-        var BOSS_HEIGHT = 220;
-        var bossXspeed = 30;
-
+        var bossYpos = 800;
+        var BOSS_WIDTH = 250;
+        var BOSS_HEIGHT = 150;
+        var bossXspeed = 5;
+        // boss variables
 
         const D_KEY = 68;
         const A_KEY = 65;
         const SPACE_KEY = 32;
         const BACKSPACE_KEY = 8;
-
+        // constants for keycodes
 
         var dKeyPressed = false;
         var aKeyPressed = false;
         var spaceKeyPressed = false;
         var backspaceKeyPressed = false;
-
+        // key press variables
 
         var background1 = new Image();
         background1.src = "images/background1.png";
-
+        
         var gameover = new Image();
         gameover.src = "images/gameover.png";
 
@@ -85,31 +84,35 @@
         var boss = new Image();
         boss.src = "images/mmcharger.png";
 
-
         var sword = new Image();
         sword.src = "images/sword.png";
+        // image variables for backgrounds/enemies/etc
 
         var gameRun = true;
 
         var difficulty = '';
         var pass = false;
 
-        while (pass == false) {
-            difficulty = prompt('which difficulty do you want? easy (Attuned), medium (Ascended) or hard (Radiant)');
+        while (pass == false) { // until happy no exit loop // creates a prompt wich asks the user for their prefered difficulty
+            difficulty = prompt(
+                'which difficulty do you want? easy (Attuned), medium (Ascended) or hard (Radiant)');
             if (difficulty != null) {
                 difficulty = difficulty.toLowerCase()
                 if (difficulty == 'easy' || difficulty == 'medium' || difficulty == 'hard')
                     pass = true;
+                //converts to lower case, Easy
             }
         }
 
         var color = '';
         var bosshp = 100;
         var bosshpd = 100;
+        // variables set via difficulty option
 
         if (difficulty == 'easy') {
             bosshp = 100
             color = 'chocolate';
+            enemyXspeed = 10
             bossphd = 100
             difficulty2 = 'Attuned'
 
@@ -118,6 +121,7 @@
         if (difficulty == 'medium') {
             bosshp = 200
             color = 'silver';
+            enemyXspeed = 15
             bosshpd = 200
             difficulty2 = 'Ascended'
         }
@@ -125,9 +129,11 @@
         if (difficulty == 'hard') {
             bosshp = 300
             color = 'gold';
+            enemyXspeed = 21
             bosshpd = 300
             difficulty2 = 'Radiant'
         }
+        // changes bosshp, enemyXspeed and bosshpd value based on difficulty input
 
         var userName = '';
         while (userName == '' || userName == null) {
@@ -136,7 +142,7 @@
 
         var setup = true;
 
-        function mainloop() {
+        function mainloop() { // makes the game run, establishes and makes all variables, functions and drawn images true
             if (gameRun) {
 
                 if (setup) {
@@ -145,98 +151,98 @@
 
                     setup = false;
                 }
-                drawImg(background1, 0, 0, canvas.width, canvas.height); // big
-                drawImg(sword, swordXpos, swordYpos, SWORD_WIDTH, SWORD_HEIGHT);
-                drawImg(boss, bossXpos, bossYpos, BOSS_WIDTH, BOSS_HEIGHT);
-                drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT);
-                drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos, playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT);
+                drawImg(background1, 0, 0, canvas.width, canvas.height); // makes the background image for canvas
+                drawImg(sword, swordXpos, swordYpos, SWORD_WIDTH, SWORD_HEIGHT); // draws the sword image on canvas
+                drawImg(boss, bossXpos, bossYpos, BOSS_WIDTH, BOSS_HEIGHT); // draws the boss image on canvas
+                drawImg(enemy, enemyXpos, enemyYpos, ENEMY_WIDTH, ENEMY_HEIGHT); // draws the enemy image on canvas
+                drawSprite(imageAssets.player, playerXsource, playerYsource, PLAYER_WIDTH, PLAYER_HEIGHT, playerXpos,
+                    playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT); // draws the players sprite and parameters on canvas
                 colorText('Mosscharger Boss: ', canvas.width / 18, canvas.height / 16, '70px Arial',
-                    'white', 09);
-                colorText(bosshp + ' / ' + bosshpd, canvas.width / 2.5, canvas.height / 16, '70px Arial', color, 09);
-                colorText('difficulty: ', canvas.width / 18, canvas.height / 7, '50px Arial', 'white', 09);
-                colorText(difficulty2, canvas.width / 5, canvas.height / 7, '50px Arial', color, 09);
+                    'white', 09); // displayes boss name on canvas
+                colorText(bosshp + ' / ' + bosshpd, canvas.width / 2.5, canvas.height / 16, '70px Arial', color, 09); // displays boss hp on canvas
+                colorText('difficulty: ', canvas.width / 18, canvas.height / 7, '50px Arial', 'white', 09); 
+                colorText(difficulty2, canvas.width / 5, canvas.height / 7, '50px Arial', color, 09); // displays difficulty on canvas
 
                 PlayerMove()
                 spriteMove()
                 EnemyMove()
                 SwordAppear()
                 BossMove()
-                for (var i = 0; i < eNum; i++) {
-                    makeEnemy();
-                }
+
 
 
             } else {
                 gameRun = false;
-                drawImg(gameover, 0, 0, canvas.width, canvas.height);
-                colorText('DEFEAT', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'red');
+                drawImg(gameover, 0, 0, canvas.width, canvas.height); // changes the canvas image when boss or enemy hits player
+                colorText('DEFEAT', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'red'); // displays defeat message
                 colorText(userName + ', the boss had ' + bosshp + ' HP left', canvas.width / 4, canvas
-                    .height / 4, '70px Arial', 'white', 09);
+                    .height / 4, '70px Arial', 'white', 09); // displays username and boss hp left
 
 
             }
 
-        }
+        }  // end of function
 
 
-        function loadImgAssets() {
+        function loadImgAssets() { // loads player sprite from src
             imgs = {};
 
             imgs.player = new Image();
             imgs.player.src = "images/player.png";
 
             return imgs;
-        }
- 
-        for (i = 0; i < PLAYER_SPRITES; i++) {
+        }  // end of function
+
+        for (i = 0; i < PLAYER_SPRITES; i++) { // makes array for sprites in spritesheet
             playerSpriteArray[i] = new Array(2);
             playerSpriteArray[i][0] = PLAYER_WIDTH * (i % 12);
-            
+
 
             playerSpriteArray[i][1] = PLAYER_HEIGHT * playerSpriteSheetCols;
             console.log(playerSpriteArray[i]);
 
-            
-        
+
+
         }
 
-        function spriteMove() {
+        function spriteMove() { // makes the spritesheet shift between different sprites in the array on the players position
             playerXsource = playerSpriteArray[Math.floor(playerSpriteNum)][0];
             playerYsource = playerSpriteArray[Math.floor(playerSpriteNum)][1];
-            
-            if (aKeyPressed) {
-                playerSpriteNum += aniFrameRate;
+
+            if (aKeyPressed) { // when a key pressed player sprite cycles through sprites 1 to 6
+                playerSpriteNum += aniFrameRate; // makes sprite cycle with set frame rate
                 if (playerSpriteNum > 6) {
                     playerSpriteNum = 0;
                 }
             }
 
-            if (dKeyPressed) {
-                playerSpriteNum += aniFrameRate;
+            if (dKeyPressed) { // when d key pressed player sprite cycles through sprites 7 to 12
+                playerSpriteNum += aniFrameRate; // makes sprite cycle with set frame rate
                 if (playerSpriteNum > 11) {
                     playerSpriteNum = 7;
                 }
             }
-            
-            
-            
-        
-        }
-        function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
+
+
+
+
+        }  // end of function
+
+        function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) { // establishes parameters for spritesheet
             canvasContext.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
-        }
+        }  // end of function
 
-        function drawImg(src, x, y, w, h) {
+        function drawImg(src, x, y, w, h) { // establishes parameters for drawing images
             canvasContext.drawImage(src, x, y, w, h)
-        }
+        }  // end of function
 
-        function colorText(msg, x, y, f, c) {
+        function colorText(msg, x, y, f, c) { // establishes parameters for text on the canvas
             canvasContext.font = f;
             canvasContext.fillStyle = c;
             canvasContext.fillText(msg, x, y);
-        }
+        }  // end of function
 
-        function keyPressed(evt) {
+        function keyPressed(evt) { // get key press events for movement and sword swing
             if (evt.keyCode == D_KEY) {
                 dKeyPressed = true;
             }
@@ -251,10 +257,10 @@
             if (evt.keyCode == BACKSPACE_KEY) {
                 backspaceKeyPressed = true;
             }
-        }
+        }  // end of function // if keys are pressed, sets keypressed to true
 
 
-        function keyReleased(evt) {
+        function keyReleased(evt) { // get key released events for movement
             if (evt.keyCode == D_KEY) {
                 dKeyPressed = false;
             }
@@ -267,10 +273,10 @@
             if (evt.keyCode == BACKSPACE_KEY) {
                 backspaceKeyPressed = false;
             }
-        }
+        }  // end of function // if keys are released, sets keypressed to false
 
 
-        function PlayerMove() {
+        function PlayerMove() { // allows the player to move a certain direction on the canvas by key presses and creates boundaries for the players movement
 
             if (dKeyPressed && playerXpos < canvas.width * .979) {
                 playerXpos += playerXspeed
@@ -283,7 +289,7 @@
             }
 
             playerYpos += playerYspeed;
-            playerYspeed += 2;
+            playerYspeed += 1.5;
 
             if (playerYpos <= 0) {
                 playerYpos = 0;
@@ -293,92 +299,88 @@
             if (playerYpos + PLAYER_SIZE * 1.5 >= canvas.height) {
                 playerYpos = canvas.height - PLAYER_SIZE * 1.5;
 
-            }
+            }  // creates jump cooldown
+            
+
+        }  // end of function
 
 
-        }
 
 
-        
-
-        function SwordAppear() {
+        function SwordAppear() { // makes the sword appear infront of the player when backspace keypressed
             if (backspaceKeyPressed) {
                 swordXpos = playerXpos;
                 swordYpos = PLAYER_SIZE + playerYpos;
                 SWORD_WIDTH = 50;
                 SWORD_HEIGHT = 100;
+                // variables for sword when backspace key is pressed
 
             } else {
                 SWORD_WIDTH = 0;
                 SWORD_HEIGHT = 0;
                 swordYpos = canvas.height * 0.01;
+                // variables for sword when backspace key is released
 
             }
-        }
+        }  // end of function
 
 
-        function drawEnemy() {
-            enemies.forEach(function (e, i, array) {
-                drawImg(enemy, e.enemyXpos, e.enemyYpos, e.ENEMY_WIDTH, e.ENEMY_HEIGHT);
-            });
-        }
+        function BossMove() { 
+
+            bossXpos -= bossXspeed // makes the boss move across the canvas to the left with set speed
 
 
-        function BossMove() {
-
-            bossXpos -= bossXspeed
-
-
-            if (bossXpos < canvas.width * -0.05) {
+            if (bossXpos < canvas.width * -0.05) { // when boss moves off canvas gets put back on other side
                 bossXpos = canvas.width * 1.1;
             }
 
             if (bossXpos < swordXpos + SWORD_WIDTH &&
                 bossXpos + BOSS_WIDTH > swordXpos &&
                 bossYpos < swordYpos + SWORD_HEIGHT &&
-                bossYpos + BOSS_HEIGHT > swordYpos) {
+                bossYpos + BOSS_HEIGHT > swordYpos) { // when sword hits boss
                 console.log("hit");
-                bosshp--
+                bosshp-- // boss hp goes down
             }
 
-          //  if (bossXpos < playerXpos + PLAYER_SIZE &&
-           //     bossXpos + BOSS_WIDTH > playerXpos &&
-             //   bossYpos < playerYpos + PLAYER_SIZE &&
-             //   bossYpos + BOSS_HEIGHT > playerYpos) {
-             //   gameRun = false;
+            if (bossXpos < playerXpos + PLAYER_SIZE &&
+                bossXpos + BOSS_WIDTH > playerXpos &&
+                bossYpos < playerYpos + PLAYER_SIZE &&
+                bossYpos + BOSS_HEIGHT > playerYpos) { // when boss hits player
+                gameRun = false; // user loses
+            }
 
-           //   gameRun}
-
-            if (bosshp == 0) {
+            if (bosshp == 0) { // changes background to win screen when bosshp = 0, displays username
+                // and moves enemy and boss away from player so that they cant trigger the lose screen since it is still active in mainloop
                 BOSS_WIDTH = 0;
                 BOSS_HEIGHT = 0;
                 bossYpos = canvas.height * 0.01;
                 ENEMY_WIDTH = 0;
                 ENEMY_HEIGHT = 0;
                 enemyYpos = canvas.height * 0.01;
+                // variables for enemy and boss when bosshp is 0
                 drawImg(gamewin, 0, 0, canvas.width, canvas.height);
                 colorText('VICTORY', canvas.width / 2.5, canvas.height / 7, '100px Arial', 'lime');
                 colorText(userName + ', you defeated the Mosscharger', canvas.width / 4, canvas.height / 4,
                     '70px Arial', 'white');
             }
 
-        }
+        }  // end of function
 
         function EnemyMove() {
 
-            enemyXpos += enemyXspeed
+            enemyXpos += enemyXspeed // makes enemy move across the canvas to the right with set speed
 
 
-            if (enemyXpos > canvas.width * 1.1) {
+            if (enemyXpos > canvas.width * 1.1) { // when enemy moves off canvas gets put back to other side
                 enemyXpos = canvas.width * -0.05;
             }
-          //  if (enemyXpos < playerXpos + PLAYER_SIZE &&
-           //     enemyXpos + ENEMY_WIDTH > playerXpos &&
-           //     enemyYpos < playerYpos + PLAYER_SIZE &&
-           //     enemyYpos + ENEMY_HEIGHT > playerYpos) {
-            //    gameRun = false;
-          //  }
+            if (enemyXpos < playerXpos + PLAYER_SIZE &&
+                enemyXpos + ENEMY_WIDTH > playerXpos &&
+                enemyYpos < playerYpos + PLAYER_SIZE &&
+                enemyYpos + ENEMY_HEIGHT > playerYpos) { // when enemy touches player
+                gameRun = false;
+            }
 
-        }
+        }  // end of function
     </script>
 </body>
